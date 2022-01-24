@@ -16,6 +16,8 @@
 \usepackage{lipsum}
 \usepackage{multirow}
 \usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionType{code}[Listing][Spis listingów] 
 
 % definicje nagłówków i stopek
 \pagestyle{fancy}
@@ -38,114 +40,43 @@
 % treść
 \begin{document}
 \sloppy
-
-
-
 \thispagestyle{empty}
-
 \includepdf{stronatytulowa}
-% najpierw uzupełnij w 'stronatytulowa.odt' openoffice i wyeksportuj do 'stronatytulowa.pdf'
-
 \newpage{}
 
 \thispagestyle{empty}
-
 \newpage{}
-
-
 
 \tableofcontents{}
 
-\chapter{}
-\section{Wstęp}
+\chapter*{Wstęp}
+\addcontentsline{toc}{chapter}{Wstęp}
 \label{Wstep}
 %Mega ogólne sprawy dotyczące tego co chce zrobić
 \lipsum[1]
 
-\section{Cel i teza pracy}
-\label{Cel i teza pracy}
+\chapter*{Cel i zakres pracy}
+\addcontentsline{toc}{chapter}{Cel i zakres pracy}
+\label{Cel i zakres pracy}
 %celem pracy jest napisanie programu bla bla
 \lipsum[1]
 
-\section{Zakres pracy}
-\label{Zakres pracy}
-%Trza zrobic research bla bla
-\begin{itemize}
-	\item Przegląd metod analizy obrazu;
-	\item Przegląd dostępnych sieci neuronowych dedykowanych do analizy obrazu;
-	\item Opracowanie specyfikacji sprzętowej niezbędnej do realizacji prototypowego systemu;
-	\item Wytworzenie oprogramowania realizującego wykrywanie łuku elektrycznego;
-	\item Analiza wyników i szybkości działania zastosowanych metod YoLo, R-CNN;
-\end{itemize}
-\lipsum[1]
+\chapter{Język migowy American Sign Language}
 
-\chapter{Rozdział o czymś tam}
-
-\section{Sekcja A}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=14cm]{figures/heart.png}
-	\caption{Serduszko}
-	\label{fig1}
-\end{figure}
+\section{Historia}
+\section{Populacja}
+\section{Dystrybucja geograficzna}
+\section{Składnia języka}
 
 
-\section{Sekcja B}
-
-\begin{table}[h]
-	\centering
-	\caption{Wino}
-	\begin{tabular}{lcccllll}
-		\multicolumn{1}{c}{{\color[HTML]{44546A} }} &
-		{\color[HTML]{44546A} } &
-		{\color[HTML]{44546A} } &
-		{\color[HTML]{44546A} } &
-		\multicolumn{1}{c}{{\color[HTML]{44546A} }} &
-		\multicolumn{1}{c}{{\color[HTML]{44546A} }} &
-		\multicolumn{2}{c}{{\color[HTML]{44546A} \textbf{Partia przed burzliwą}}} \\
-		\multicolumn{1}{c}{\multirow{-2}{*}{{\color[HTML]{44546A} \textbf{Oczekiwany typ wina}}}} &
-		\multirow{-2}{*}{{\color[HTML]{44546A} \textbf{Data nastawu}}} &
-		\multirow{-2}{*}{{\color[HTML]{44546A} \textbf{Data zastawienia fermentacji cichej}}} &
-		\multirow{-2}{*}{{\color[HTML]{44546A} \textbf{Data zlania do butelek}}} &
-		\multicolumn{1}{c}{\multirow{-2}{*}{{\color[HTML]{44546A} \textbf{Ilość moszczu {[}kg{]}}}}} &
-		\multicolumn{1}{c}{\multirow{-2}{*}{{\color[HTML]{44546A} \textbf{Zabezpieczenie   pirosiarczanem potasu {[}g{]}}}}} &
-		{\color[HTML]{44546A} \textbf{Woda   {[}L{]}}} &
-		{\color[HTML]{44546A} \textbf{Cukier {[}kg{]}}} \\
-		Czerwone słodkie/półsłodkie MEŁGIEW &
-		16.10.2021 &
-		24.10.2021 &
-		\multicolumn{1}{l}{} &
-		15,660 &
-		1,566 &
-		3,132 &
-		3,132 \\
-		Czerwone słodkie/półsłodkie BIŁGORAJ 1/2 &
-		&
-		&
-		&
-		15,000 &
-		1,500 &
-		3,000 &
-		3,000 \\
-		Czerwone słodkie/półsłodkie BIŁGORAJ 2/2 &
-		\multirow{-2}{*}{27.10.2021} &
-		\multirow{-2}{*}{05.11.2021} &
-		\multirow{-2}{*}{} &
-		10,000 &
-		1,000 &
-		2,000 &
-		2,000
-	\end{tabular}
-\end{table}
-
-
-\chapter{Rozdział o czymś innym}
+\chapter{Konwolucyjne sieci neuronowe i rozpoznawanie obrazów}
 
 \section{Sekcja C}
-
-
 \section{Sekcja D}
+
+\chapter{Implementacja aplikacji do rozpoznawania języka migowego ASL}
+
+\chapter{Podsumowanie}
 
 
 \listoftables{} % jeśli są tabele
@@ -153,6 +84,9 @@
 
 \listoffigures{} % jeśli są tabele
 \addcontentsline{toc}{chapter}{Spis rysunków}
+
+\listofcodes
+\addcontentsline{toc}{chapter}{Spis listingów}
 
 \addcontentsline{toc}{chapter}{Bibliografia}
 \bibliographystyle{ieeetr}
