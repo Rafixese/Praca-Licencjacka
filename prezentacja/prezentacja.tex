@@ -3,6 +3,7 @@
 	\usetheme{Madrid}
 }
 \usepackage{graphicx}
+\usepackage{listings}
 \graphicspath{{./img}}
 \usepackage[backend=bibtex, sorting=none]{biblatex}
 \addbibresource{./bib/bib.bib}
@@ -66,6 +67,54 @@
 		\section{Język migowy American Sign Language}
 		\begin{center}
 			\includegraphics[scale=0.25]{Asl}
+		\end{center}
+	\end{frame}
+
+	% 6
+	\begin{frame}
+		\frametitle{Treningowy zbiór danych}
+		\section{Treningowy zbiór danych}
+		Treningowy zbiór danych zawiera około 50 000 autorskich obrazów poszczególnych liter alfabetu ASL.
+		\begin{center}
+			\begin{tabular}{c|c|c|c}
+				Litera & A & B & F \\
+				\hline
+				Obraz &
+				\includegraphics[scale=0.4]{1} &
+				\includegraphics[scale=0.4]{2} &
+				\includegraphics[scale=0.4]{3}
+			\end{tabular}
+			
+		\end{center}
+	\end{frame}
+
+	% 7
+	\begin{frame}
+		\frametitle{Model i architektura}
+		\section{Model i architektura}
+		\begin{center}
+			\lstinputlisting[basicstyle=\linespread{0.1}\tiny]{model.txt}
+		\end{center}
+	\end{frame}
+
+	% 8
+	\begin{frame}
+		\frametitle{Trening modelu}
+		\section{Model i architektura}
+		Model osiąga przyzwoite wyniki rzędu 85-90\% dokładności klasyfikacji na zbiorze walidacyjnym.
+		\includegraphics[scale=0.23]{myplot}
+	\end{frame}
+
+	% 9
+	\begin{frame}
+		\frametitle{Program do rozpoznawania języka migowego w czasie rzeczywistym}
+		\section{Program do rozpoznawania języka migowego w czasie rzeczywistym}
+		\begin{center}
+			\includegraphics[scale=0.07]{U}
+			\includegraphics[scale=0.07]{M}
+			
+			\includegraphics[scale=0.07]{C}
+			\includegraphics[scale=0.07]{S}
 		\end{center}
 	\end{frame}
 
