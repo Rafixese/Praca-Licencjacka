@@ -1,0 +1,79 @@
+\documentclass{beamer}
+\mode<presentation>{
+	\usetheme{Madrid}
+}
+\usepackage{graphicx}
+\graphicspath{{./img}}
+\usepackage[backend=bibtex, sorting=none]{biblatex}
+\addbibresource{./bib/bib.bib}
+\usepackage{polski}
+\title[]{Rozpoznawanie liter języka migowego z zastosowaniem technik uczenia maszynowego}
+\institute[UMCS]
+{
+	Uniwersytet Marii Curie Skłodowskiej
+	\medskip
+}
+\author{Rafał Hrabia}
+\date{\today}
+
+\begin{document}
+	% 1
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	% 2
+	\begin{frame}
+		\frametitle{Cel pracy}
+		\section{Cel pracy}
+		\begin{itemize}
+			\item Przybliżenie zagadnienia języka migowego American Sign Language oraz sieci konwolucyjnych CNN
+			\item Stworzenie zbioru danych zawierających obrazy, na których znajdują się znaki języka migowego American Sign Language
+			\item Stworzenie oraz wytrenowanie modelu rozpoznającego znaki języka migowego
+			\item Implementacja programu (PoC) umożliwiającego rozpoznawanie języka migowego w czasie rzeczywistym
+		\end{itemize}
+	\end{frame}
+
+	% 3
+	\begin{frame}
+		\frametitle{Istota pracy}
+		\section{Istota pracy}
+		\begin{itemize}
+			\item Możliwe w przyszłości ułatwienie komunikacji osób nie znających języka migowego z osobami głuchoniemymi
+		\end{itemize}
+	\end{frame}
+
+	% 4
+	\begin{frame}
+		\frametitle{Język migowy American Sign Language}
+		\section{Język migowy American Sign Language}
+		Jest to wariant języka migowego używanego w krajach obu Ameryk, gdzie natywnym językiem jest angielski.\cite{padden}
+		
+		Posiada 26 znaków (American manual alphabet), używanych do wyrażania słów.\cite{costello}
+		
+		Składnia języka opiera się na subject–verb–object (SVO) czyli w zdaniu występuje podmiot, orzeczenie i obiekt, do którego skierowany jest czasownik.\cite{neidle} Przykładowo:
+		\begin{center}
+			FATHER LOVE CHILD
+			
+			co będzie oznaczało
+			
+			"The father loves the child."
+		\end{center}
+	\end{frame}
+
+	% 5
+	\begin{frame}
+		\frametitle{Język migowy American Sign Language}
+		\section{Język migowy American Sign Language}
+		\begin{center}
+			\includegraphics[scale=0.25]{Asl}
+		\end{center}
+	\end{frame}
+
+	% Literatura
+	\begin{frame}
+		\frametitle{Literatura}
+		\section{Literatura}
+		\printbibliography
+	\end{frame}
+
+\end{document}
