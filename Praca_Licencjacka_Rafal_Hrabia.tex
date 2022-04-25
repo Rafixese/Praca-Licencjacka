@@ -166,22 +166,34 @@ Konwolucyjne sieci neuronowe pozwoliły na przełomowe osiągnięcia ostatniej d
 
 \section{Architektura}
 
-\lipsum[1]
-
 \subsection{Warstwy konwolucyjne}
+\label{konw}
 \lipsum[1]
 
 \subsection{Warstwy Pooling}
+\label{pool}
 \lipsum[1]
 
 \subsection{Warstwa Flatten}
+\label{flat}
 \lipsum[1]
 
 \subsection{Warstwy Dense}
+\label{dense}
 \lipsum[1]
 
 \section{Zasada działania}
-\lipsum[1]
+
+Model CNN na swoim wejściu posiada najczęściej naprzemiennie ustawione warstwy konwolucyjne(\ref{konw}) i Pooling(\ref{pool}). Pozwala to na automatyczne wykrywanie cech charakterystycznych i bardzo szybkie zmniejszenie objętości przetwarzanych danych. Przetworzone dane obrazu wejściowego są spłaszczane do jednego wymiaru przez warstwę Flatten(\ref{flat}). Spłaszczone dane przyjmują kolejne warstwy gęsto połączone(\ref{dense}) i dokonują ostatecznej klasyfikacji danych wejściowych do danej kategorii\cite{9463236}.
+
+Przykładowy model został przedstawiony na rysunku \ref{cnn_mod}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.55]{cnn_arch.png}
+	\caption{Model CNN\cite{9463236}}
+	\label{cnn_mod}
+\end{figure}
 
 \section{Zastosowania}
 \lipsum[1]
