@@ -168,7 +168,31 @@ Konwolucyjne sieci neuronowe pozwoliły na przełomowe osiągnięcia ostatniej d
 
 \subsection{Warstwy konwolucyjne}
 \label{konw}
-\lipsum[1]
+
+Warstwa konwolucyjna wykonuje prostą operację nałożenia filtra zachowującego się na wzór funkcji aktywacji(rysunek \ref{conv_filter}). Przeprowadzenie tej operacji piksel po pikselu przez wiele filtrów tworzy mapy cech, które są później wykorzystywane w kolejnych warstwach modelu\cite{9388351}. Warstwy konwolucyjne zamiast pełnego połączenia, gdzie każdy piksel obrazu wejściowego jest połączony z każdym pikselem obrazu wyjściowego, stosuje lokalne pola recepcyjne zmniejszając drastycznie liczbę połączeń (rysunek \ref{conv_img}).
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.9]{conv_filter.png}
+	\caption{Przykładowe działanie filtrów 3x3 na obrazach\cite{wikipedia_filterkernel}}
+	\label{conv_filter}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{conv.png}
+	\caption{Warstwa konwolucyjna - zasada działania\cite{developpapercom_2021}}
+	\label{conv_img}
+\end{figure}
+
+Warstwy konwolucyjne pozwalają na jeszcze większe zmniejszenie ilości parametrów. Mowa o opcji ustawienia skoku pomiędzy polami recepcyjnymi - \emph{stride}, które domyślnie zachodzą na siebie przy wartości parametru = 1. Po konfiguracji \emph{stride} możliwe jest częściowe lub całkowite rozdzielenie poszczególnych węzłów(rysunek \ref{stride_img})\cite{8308186}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{stride.png}
+	\caption{Różnica w odstępach pomiędzy polami recepcyjnymi w zależności od parametru \emph{stride}\cite{8308186}}
+	\label{stride_img}
+\end{figure}
 
 \subsection{Warstwy Pooling}
 \label{pool}
