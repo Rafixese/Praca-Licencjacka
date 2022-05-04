@@ -299,12 +299,33 @@ Warstwy \emph{fully-connected} są podobne do tych znajdujących się w zwykłyc
 Przy przetwarzaniu obrazów wprowadzane do sieci są bardzo duże ilości danych. Dzięki sekcji warstw konwolucyjnych i \emph{pooling} następuje redukcja rozmiaru danych jakie trafiają do warstw \emph{fully-connected}. Bez tego przetwarzanie obrazów byłoby niemożliwe lub bardzo wolne z powodu dużego zapotrzebowania warstw \emph{fully-connected} na moc obliczeniową z racji na obecność wielu równoległych obliczeń w tych warstwach\cite{8308186}. 
 
 \section{Zastosowania}
-\lipsum[1]
+
+Sieci \emph{CNN} są używane w wielu istniejących aplikacjach. Można ich użyć wszędzie tam gdzie istnieje potrzeba analizy wzorców występujących w tekscie, dzwięku czy oczywiście w obrazach. Najczęstsze zastosowania między innymi to:
+\begin{itemize}
+	\item rozpoznawanie twarzy,
+	\item rozpoznawanie emocji twarzy,
+	\item rozpoznawanie obiektów,
+	\item autonomiczne pojazdy,
+	\item translacja języków,
+	\item predykcja następnego słowa na podstawie kontekstu wpisywanego zdania,
+	\item rozpoznawanie pisma odręcznego,
+	\item analiza obrazów medycznych takich jak zdjęcia rentgenowskie,
+	\item wykrywanie nowotworów,
+	\item przetwarzanie zapytań w języku naturalnym,
+	\item opisywanie obrazów,
+	\item uwierzytelnianie na podstawie parametrów biometrycznych,
+	\item klasyfikacja dokumentów,
+	\item segmentacja trójwymiarowych obrazów medycznych\cite{cnnapps}.
+\end{itemize}
+
+Na potrzeby tej pracy w rozdziałach \ref{mnist} i \ref{catsdogs} zostaną przedstawione przykłady analizy i klasyfikacji wieloklasowej i binarnej obrazów.
 
 \subsection{MNIST}
+\label{mnist}
 \lipsum[1]
 
 \subsection{Cat vs Dogs}
+\label{catsdogs}
 \lipsum[1]
 
 \chapter{Implementacja aplikacji do rozpoznawania języka migowego ASL}
