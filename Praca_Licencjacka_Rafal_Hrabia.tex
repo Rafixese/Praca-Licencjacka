@@ -194,6 +194,52 @@ Warstwy konwolucyjne pozwalają na jeszcze większe zmniejszenie ilości paramet
 	\label{stride_img}
 \end{figure}
 
+Jedną z wad warstw konwolucyjnych jest utrata informacji, która pojawia się na obrzeżach obrazu. Istnieje bardzo prosta i efektywna metoda do rozwiązania tego problemu - \textit{"zero-padding"}. Zaletą takiego rozwiązania, jest również zachowanie rozmiaru obrazu na wyjściu warstwy. Dla przykładu (rysunek \ref{no_padding}) z wartościami N=7, F=3 i parametrze \emph{stride}=1, rozmiar danych wyjściowych wyniesie 5x5, gdzie oryginalny rozmiar danych wejściowych wynosił 7x7\cite{8308186}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.45]{no_padding.png}
+	\caption{Dane bez zero-padding\cite{8308186}}
+	\label{no_padding}
+\end{figure}
+
+Wzór na obliczenie rozmiaru wyjściowego obrazu \emph{O} dla danych wejściowych \emph{N x N} i rozmiarze filtra \emph{F x F}, jest następujący:
+\begin{equation}
+	O = 1 + \frac{N-F}{S}
+	\label{nopaddingoutput}
+\end{equation}
+Gdzie:
+\begin{itemize}
+	\item N - rozmiar danych wejściowych,
+	\item F - rozmiar filtra,
+	\item S - wartość parametru \emph{stride}.
+\end{itemize}
+
+
+Natomiast, dodając wypełnienie zerami rozmiar danych wyjściowych będzie wynosił 7x7, taki sam jak danych wejściowych(rysunek \ref{padding})\cite{8308186}. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.45]{padding.png}
+	\caption{Dane z zero-padding\cite{8308186}}
+	\label{padding}
+\end{figure}
+
+W przypadku uzupełniania zerami następuje lekka modyfikacja wzoru \ref{nopaddingoutput}:
+\begin{equation}
+	O = 1 + \frac{N+2P-F}{S}
+	\label{paddingoutput}
+\end{equation}
+Gdzie:
+\begin{itemize}
+	\item N - rozmiar danych wejściowych,
+	\item F - rozmiar filtra,
+	\item S - wartość parametru \emph{stride},
+	\item P - liczba warstw \emph{zero-padding}
+\end{itemize}
+
+Idea uzupełniania brzegów obrazu zerami pozwala na zachowanie rozmiaru obrazu w niezmienionej formie i zatracania informacji. Dzięki temu możliwe jest zastosowanie jakiejkolwiek liczby warstw konwolucyjnych\cite{8308186}.
+
 \subsection{Warstwy Pooling}
 \label{pool}
 \lipsum[1]
@@ -252,8 +298,11 @@ Przykładowy model został przedstawiony na rysunku \ref{cnn_mod}.
 \listoftables{} % jeśli są tabele
 \addcontentsline{toc}{chapter}{Spis tabel}
 
-\listoffigures{} % jeśli są tabele
+\listoffigures{} % jeśli są obrazki
 \addcontentsline{toc}{chapter}{Spis rysunków}
+
+\listoffigures{} % jeśli są obrazki
+\addcontentsline{toc}{equation}{Spis równań}
 
 \listofcodes
 \addcontentsline{toc}{chapter}{Spis listingów}
