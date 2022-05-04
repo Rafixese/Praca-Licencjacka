@@ -164,6 +164,19 @@ W alfabecie znajduje się 26 znaków odpowiadających literom języka angielskie
 
 Konwolucyjne sieci neuronowe pozwoliły na przełomowe osiągnięcia ostatniej dekady w dziedzinie rozpoznawania wzorców, zaczynając od obrazów a kończąc na rozpoznawaniu głosu. Jednym z wyróżników sieci CNN jest znaczna redukcja ilości parametrów w dalszej części modelu. Mniejsza ilość parametrów pozwoliła na budowanie większych sieci, które mogą rozwiązywać bardziej skomplikowane problemy niż dotychczasowe modele z użyciem zwykłych sieci neuronowych\cite{8308186}.
 
+\section{Zasada działania}
+
+Model CNN na swoim wejściu posiada najczęściej naprzemiennie ustawione warstwy konwolucyjne(\ref{konw}) i Pooling(\ref{pool}). Pozwala to na automatyczne wykrywanie cech charakterystycznych i bardzo szybkie zmniejszenie objętości przetwarzanych danych. Przetworzone dane obrazu wejściowego są spłaszczane do jednego wymiaru przez warstwę Flatten(\ref{flat}). Spłaszczone dane przyjmują kolejne warstwy gęsto połączone(\ref{dense}) i dokonują ostatecznej klasyfikacji danych wejściowych do danej kategorii\cite{9463236}.
+
+Przykładowy model został przedstawiony na rysunku \ref{cnn_mod}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.55]{cnn_arch.png}
+	\caption{Model CNN\cite{9463236}}
+	\label{cnn_mod}
+\end{figure}
+
 \section{Architektura}
 
 \subsection{Warstwy konwolucyjne}
@@ -235,7 +248,7 @@ Gdzie:
 	\item N - rozmiar danych wejściowych,
 	\item F - rozmiar filtra,
 	\item S - wartość parametru \emph{stride},
-	\item P - liczba warstw \emph{zero-padding}
+	\item P - liczba warstw \emph{zero-padding}.
 \end{itemize}
 
 Idea uzupełniania brzegów obrazu zerami pozwala na zachowanie rozmiaru obrazu w niezmienionej formie i zatracania informacji. Dzięki temu możliwe jest zastosowanie jakiejkolwiek liczby warstw konwolucyjnych\cite{8308186}.
@@ -251,19 +264,6 @@ Idea uzupełniania brzegów obrazu zerami pozwala na zachowanie rozmiaru obrazu 
 \subsection{Warstwy Dense}
 \label{dense}
 \lipsum[1]
-
-\section{Zasada działania}
-
-Model CNN na swoim wejściu posiada najczęściej naprzemiennie ustawione warstwy konwolucyjne(\ref{konw}) i Pooling(\ref{pool}). Pozwala to na automatyczne wykrywanie cech charakterystycznych i bardzo szybkie zmniejszenie objętości przetwarzanych danych. Przetworzone dane obrazu wejściowego są spłaszczane do jednego wymiaru przez warstwę Flatten(\ref{flat}). Spłaszczone dane przyjmują kolejne warstwy gęsto połączone(\ref{dense}) i dokonują ostatecznej klasyfikacji danych wejściowych do danej kategorii\cite{9463236}.
-
-Przykładowy model został przedstawiony na rysunku \ref{cnn_mod}.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.55]{cnn_arch.png}
-	\caption{Model CNN\cite{9463236}}
-	\label{cnn_mod}
-\end{figure}
 
 \section{Zastosowania}
 \lipsum[1]
@@ -300,9 +300,6 @@ Przykładowy model został przedstawiony na rysunku \ref{cnn_mod}.
 
 \listoffigures{} % jeśli są obrazki
 \addcontentsline{toc}{chapter}{Spis rysunków}
-
-\listoffigures{} % jeśli są obrazki
-\addcontentsline{toc}{equation}{Spis równań}
 
 \listofcodes
 \addcontentsline{toc}{chapter}{Spis listingów}
