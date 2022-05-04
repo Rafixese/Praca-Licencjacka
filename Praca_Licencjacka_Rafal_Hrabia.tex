@@ -272,20 +272,31 @@ Zasadę działania warstwy \emph{max pooling} opisaną w poprzednim akapicie prz
 \subsection{Warstwa Flatten}
 \label{flat}
 
-Warstwa \emph{flatten} to warstwa buforowa pomiędzy wielowymiarowymi danymi pochodzącymi z warstw konwolucyjnych i \emph{pooling}, a warstwami klasycznych sieci neuronowych \emph{Dense}. Jak nazwa opisywanej warstwy wskazuje - dokonuje ona spłaszczenia wielowymiarowych danych do jednego długiego wektora, który może zostać przekazany do następnych warstw, które na podstawie danych zawartych w tym wektorze sklasyfikują ostateczny wynik\cite{superddflatten}.
-
-Przykład działania warstwy \emph{flatten} został przedstawiony na rysunku \ref{flatten}.
-
+Warstwa \emph{flatten} to warstwa buforowa pomiędzy wielowymiarowymi danymi pochodzącymi z warstw konwolucyjnych i \emph{pooling}, a warstwami klasycznych sieci neuronowych \emph{Dense}. 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.6]{flatten.png}
 	\caption{Przykładowe działanie warstwy flatten\cite{superddflatten}}
 	\label{flatten}
 \end{figure}
+Jak nazwa opisywanej warstwy wskazuje - dokonuje ona spłaszczenia wielowymiarowych danych do jednego długiego wektora, który może zostać przekazany do następnych warstw, które na podstawie danych zawartych w tym wektorze sklasyfikują ostateczny wynik\cite{superddflatten}.
+
+Przykład działania warstwy \emph{flatten} został przedstawiony na rysunku \ref{flatten}.
+
+
 
 \subsection{Warstwy Dense}
 \label{dense}
-\lipsum[1]
+Warstwy \emph{fully-connected} są podobne do tych znajdujących się w zwykłych sieciach neuronowych. Każdy węzeł jest bezpośrednio połączony z każdym węzłem z poprzedniej i następnej warstwy (rysunek \ref{fullycon})\cite{8308186}. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{fullycon.png}
+	\caption{Przykład warstw \emph{fully-connected}\cite{fullycon}}
+	\label{fullycon}
+\end{figure}
+
+Przy przetwarzaniu obrazów wprowadzane do sieci są bardzo duże ilości danych. Dzięki sekcji warstw konwolucyjnych i \emph{pooling} następuje redukcja rozmiaru danych jakie trafiają do warstw \emph{fully-connected}. Bez tego przetwarzanie obrazów byłoby niemożliwe lub bardzo wolne z powodu dużego zapotrzebowania warstw \emph{fully-connected} na moc obliczeniową z racji na obecność wielu równoległych obliczeń w tych warstwach\cite{8308186}. 
 
 \section{Zastosowania}
 \lipsum[1]
