@@ -255,7 +255,19 @@ Idea uzupełniania brzegów obrazu zerami pozwala na zachowanie rozmiaru obrazu 
 
 \subsection{Warstwy Pooling}
 \label{pool}
-\lipsum[1]
+
+Główną ideą działania warstwy \emph{Pooling} jest redukcja wymiaru danych dla następnych warstw, starając się zachować jak najwięcej informacji zawartych w danych. W domenie przetwarzania obrazów może to być porównane do zmiany rozdzielczości obrazu, na którym dokonujemy przekształcenia. Warstwa ta nie wpływa na liczbę map cech wygenerowanych przez poprzednią warstwę konwolucyjną, tylko na ich rozmiar\cite{8308186}. 
+
+\emph{Max-pooling} to jedna z najczęściej używanych metod. Dzieli ona obraz na regiony i zwraca maksymalne wartości występujące w danym regionie. Bardzo popularną wielkością regionów jest rozmiar 2x2 z parametrem \emph{stride} = 2. Powoduje to, że regiony na siebie nie nachodzą i wyjściowy obraz o rozmiarze \emph{N} (gdzie N jest liczbą parzystą) po dokonaniu na nim operacji będzie miał rozmiar $\frac{N}{2}$\cite{8308186}.
+
+Zasadę działania warstwy \emph{max pooling} opisaną w poprzednim akapicie przedstawia rysunek \ref{max_pooling}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{max_pooling.png}
+	\caption{Przykładowe działanie max pooling\cite{8308186}}
+	\label{max_pooling}
+\end{figure}
 
 \subsection{Warstwa Flatten}
 \label{flat}
