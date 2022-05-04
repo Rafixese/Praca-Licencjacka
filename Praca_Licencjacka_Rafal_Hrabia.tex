@@ -271,7 +271,17 @@ Zasadę działania warstwy \emph{max pooling} opisaną w poprzednim akapicie prz
 
 \subsection{Warstwa Flatten}
 \label{flat}
-\lipsum[1]
+
+Warstwa \emph{flatten} to warstwa buforowa pomiędzy wielowymiarowymi danymi pochodzącymi z warstw konwolucyjnych i \emph{pooling}, a warstwami klasycznych sieci neuronowych \emph{Dense}. Jak nazwa opisywanej warstwy wskazuje - dokonuje ona spłaszczenia wielowymiarowych danych do jednego długiego wektora, który może zostać przekazany do następnych warstw, które na podstawie danych zawartych w tym wektorze sklasyfikują ostateczny wynik\cite{superddflatten}.
+
+Przykład działania warstwy \emph{flatten} został przedstawiony na rysunku \ref{flatten}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{flatten.png}
+	\caption{Przykładowe działanie warstwy flatten\cite{superddflatten}}
+	\label{flatten}
+\end{figure}
 
 \subsection{Warstwy Dense}
 \label{dense}
