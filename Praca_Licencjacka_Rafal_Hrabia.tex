@@ -18,8 +18,34 @@
 \usepackage{listings}
 \usepackage{caption}
 \usepackage{booktabs}
+\usepackage{xcolor}
 \graphicspath{ {./img/} }
 \DeclareCaptionType{code}[Listing][Spis listingów] 
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	float=h
+}
 
 % definicje nagłówków i stopek
 \pagestyle{fancy}
@@ -322,6 +348,40 @@ Na potrzeby tej pracy w rozdziałach \ref{mnist} i \ref{catsdogs} zostaną przed
 
 \subsection{MNIST}
 \label{mnist}
+Zbiór \emph{MNIST} zawiera w sobie 70000 obrazów odręcznie pisanych cyfr z zakresu 0-9. Problem klasyfikacji jest aktualnie przedstawiany jako trywialne i podstawowe zagadnienie w dziedzinie \emph{AI}. Niemniej jednak jest on używany do celów nauki, jak również przez analityków jako próba spekulacji na temat obliczeń sztucznych sieci neuronowych\cite{9388351}. 
+
+Głównym wyzwaniem w zbiorze \emph{MNIST} jest zróżnicowanie odręcznie pisanych cyfr pod względem wielkości, grubości, orientacji i innych czynników. Wynika to z tego, że cyfry były komponowane przez wiele osób z różnymi sposobami pisania\cite{9388351}.
+
+Na rysunku \ref{mnistimg} zostały przedstawione przykładowe cyfry ze zbioru \emph{MNIST}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{mnistimg.png}
+	\caption{Przykłady cyfr ze zbioru \emph{MNIST}\cite{mnistwik}}
+	\label{mnistimg}
+\end{figure}
+
+Rzeczą, od której należy zacząć chcąc pracować z zbiorem \emph{MNIST} jest skorzystanie z interfejsu \emph{Keras API} w celu pobrania zbioru danych. Zbiór \emph{MNIST} jest podzielony na kilka części - część przeznaczoną do treningu modelu i część do ewaluacji stworzonej sieci. Wewnątrz zbiorów treningowych i testowych dane rozdzielone są na obrazy o rozmiarze 28x28 i etykiety, które zawierają numer z zakresu 0-9 odpowiadający cyfrze, do której jest przypisany\cite{mnistapp}. Poszczególne instrukcje zostały przedstawione na listingu \ref{lst:mnistdownload}.
+
+\begin{lstlisting}[language=Python, caption={Pobieranie zbioru \emph{MNIST}\cite{mnistapp}}, label={lst:mnistdownload}]
+	import tensorflow as tf
+	(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+\end{lstlisting}
+
+W celu użycia zbioru danych w modelu niezbędne jest zmiana wymiarów tablic, w~których znajdują się obrazy w celu dodatnia jednego dodatkowego wymiaru. Następnie wartości dla poszczególnych pikseli obrazów, które domyślnie znajdują się w zakresie od 0 do 255 muszą zostać znormalizowane do zakresu 0.0-1.0. Najprościej osiągnąć to poprzez operację dzielenia przez 255 wszystkich komórek(listing \ref{lst:mnistreshape})\cite{mnistapp}.
+
+\begin{lstlisting}[language=Python, caption={Zmiana rozmiarów tablic i normalizacja\cite{mnistapp}}, label={lst:mnistreshape}]
+	# Reshaping the array to 4-dims so that it can work with the Keras API
+	x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
+	x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
+	input_shape = (28, 28, 1)
+	# Making sure that the values are float so that we can get decimal points after division
+	x_train = x_train.astype('float32')
+	x_test = x_test.astype('float32')
+	# Normalizing the RGB codes by dividing it to the max RGB value.
+	x_train /= 255
+	x_test /= 255
+\end{lstlisting}
 
 
 
