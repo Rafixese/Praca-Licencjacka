@@ -486,7 +486,74 @@ Wszystkie wykorzystywane biblioteki do kolejnych podrozdziałów zostały zawart
 \end{lstlisting}
 
 \subsection{Generatory i argumentacja danych}
-\lipsum[1]
+Generatory to bardzo popularna metoda wczytywania danych prosto z folderów zawierających zbiór zdjęć. Generator z \emph{Keras API} automatycznie dzieli wczytane obrazy na klasy jeśli są umieszczone w określonej strukturze folderów na dysku. Pozwalają również na bardzo prostą argumentację danych poprzez różne przekształcenia obrazu, które są losowo aplikowane na wczytywane obrazy. Jest to bardzo dogodne podejście, znacznie wygodniejsze niż wczytywanie wszystkich obrazów do pamięci operacyjnej na raz.
+
+W celu ułatwienia odwoływania się do poszczególnych ścieżek na dysku dobrą praktyką jest zdefiniowanie zmiennych przechowujących te ścieżki za pomocą biblioteki \emph{pathlib} (listing \ref{lst:modelpaths}).
+
+\begin{lstlisting}[language=Python, caption={Definicja ścieżek do danych i modeli}, label={lst:modelpaths}]
+	# %% var
+	data_path = Path('data/raw')
+	train_path = data_path.joinpath('asl-own')
+	models_path = Path('models')
+\end{lstlisting}
+
+Obiekty generatorów pozwalają na proste podzielenie danych na podzbiory treningowe i walidacyjne. Zbiór walidacyjny posłuży do lepszej oceny sprawności modelu w trakcie uczenia. Oba generatory normalizują wartości pikseli we wczytywanych obrazach do zakresu od 0 do 1 dzięki parametrowi \emph{rescale}. Na danych treningowych w momencie wczytywania zostanie przeprowadzona prosta argumentacja obrazów składająca się z odbicia zdjęć w płaszczyźnie horyzontalnej i losowego przybliżania lub oddalania zdjęcia, w skutek czego sieć neuronowa za każdym razem będzie otrzymywała lekko inny obraz (listing \ref{lst:modelgen}).
+
+\begin{lstlisting}[language=Python, caption={Definicja generatorów}, label={lst:modelgen}]
+	# %% generators
+	
+	data_generator = ImageDataGenerator(
+		horizontal_flip=True,
+		fill_mode='nearest',
+		rescale=1 / 255.0,
+		zoom_range=0.2,
+		validation_split=0.1
+	)
+	valid_generator = ImageDataGenerator(
+		rescale=1 / 255.0,
+		validation_split=0.1
+	)
+	
+	train_gen = data_generator.flow_from_directory(
+		directory=train_path,
+		target_size=(200, 200),
+		color_mode="rgb",
+		batch_size=64,
+		class_mode="sparse",
+		seed=2022,
+		subset="training"
+	)
+	valid_gen = valid_generator.flow_from_directory(
+		directory=train_path,
+		target_size=(200, 200),
+		color_mode="rgb",
+		batch_size=64,
+		class_mode="sparse",
+		seed=2022,
+		subset="validation"
+	)
+	classes = list(train_gen.class_indices.keys())
+	print(classes)
+	
+\end{lstlisting}
+
+Na tym etapie generatory są gotowe do użycia w sieci neuronowej. Generatory można przetestować ręcznie i wyświetlić wczytywane obrazy w sposób przedstawiony na listingu \ref{lst:modelgentest} za pomocą biblioteki \emph{OpenCV}.
+
+\begin{lstlisting}[language=Python, caption={Test generatorów}, label={lst:modelgentest}]
+	# %% test generators
+	def decode_class(cls, one_hot):
+		return cls[np.argmax(one_hot)]
+		
+	for i in range(10):
+		image, label = next(train_gen)
+		print(decode_class(classes, label))
+		image = image[0] * 255.0
+		image = image.astype('uint8')
+		image = np.squeeze(image)
+		cv2.imshow('i', image)
+		cv2.waitKey(0)
+		cv2.destroyAllWindows()
+\end{lstlisting}
 
 \subsection{Architektura modelu}
 \lipsum[1]
