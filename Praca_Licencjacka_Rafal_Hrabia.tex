@@ -683,14 +683,108 @@ Na wykresie \ref{model_train} został zwizualizowany proces treningu i towarzysz
 \end{figure}
 
 \section{Aplikacja do rozpoznawania języka migowego w czasie rzeczywistym}
-\lipsum[1]
+
+Stworzona aplikacja jest minimalistycznym programem o ograniczonym interfejsie, który jednak dowodzi wykonalności projektu. Aplikacja z dobrze wyszkolonym modelem jest w stanie w czasie rzeczywistym z dużą skutecznością rozpoznawać znaki pokazywane przez użytkownika.
+
+W celu implementacji skorzystano z bibliotek \emph{OpenCV}, \emph{Tensorflow}, \emph{numpy} i \emph{time}. Przed wystąpieniem głównej pętli programowej inicjalizowane są zmienne odpowiadające za między innymi interfejs kamery i wczytany model. Metoda \emph{decode\_class} odpowiada za translację wektora zwracanego przez model na konkretną literę alfabetu (listing \ref{lst:appimports}).
+
+\begin{lstlisting}[language=Python, caption={Wykorzystywane biblioteki i inicjalizacja zmiennych}, label={lst:appimports}]
+	import cv2
+	import numpy as np
+	import tensorflow as tf
+	import time
+	
+	vid = cv2.VideoCapture(0)
+	vid.set(cv2.CAP_PROP_FRAME_WIDTH, 200)
+	vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 200)
+
+	model = tf.keras.models.load_model('models/04-0.34.hdf5')
+	
+	def decode_class(one_hot):
+		cls = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+		return cls[np.argmax(one_hot)]
+	
+	last_char = 'None'
+	text = ''
+	char_time_start = time.time()
+\end{lstlisting}
+
+Główna pętla programowa zajmuje się pozyskiwaniem klatek z kamery za pomocą metody \emph{vid.read()}. Tak pozyskana klatka jest zmniejszana do rozmiaru 200x200 pikseli i normalizowana w celu klasyfikacji przez model. Następnie wynik klasyfikacji jest dekodowany wcześniej wspomnianą metodą \emph{decode\_class} dla otrzymania konkretnej litery. Litera jest akceptowana i wyświetlana na ekranie jeśli występuje niezmiennie przez określoną ilość czasu.
+
+\begin{lstlisting}[language=Python, caption={Pętla programowa}, label={lst:apploop}]
+	while True:
+		ret, frame = vid.read()
+		batch = cv2.resize(frame, (200, 200))
+		batch = np.reshape(batch, (1, 200, 200, 3))
+		batch = batch * (1 / 255.)
+		pred = model.predict(batch, verbose=0)
+		char = decode_class(pred)
+		if char != last_char:
+			last_char = char
+			char_time_start = time.time()
+		if (time.time() - char_time_start) > 2.0:
+			text += char
+			char_time_start = time.time()
+		frame = cv2.putText(frame,
+			f'Char: {char}',
+			org=(1, 30),
+			fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+			fontScale=1,
+			thickness=1,
+			color=(0, 0, 255))
+		frame = cv2.putText(frame,
+			f'Text:{text if len(text) < 10 else text[-10:]}',
+			org=(1, 55),
+			fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+			fontScale=1,
+			thickness=1,
+			color=(0, 255, 0))
+		cv2.imshow('frame', frame)
+		key = cv2.waitKey(1) & 0xFF
+		if key == ord('a'):
+			text += char
+			char_time_start = time.time()
+		if key == ord('s'):
+			text = text[:-1]
+		if key == ord('q'):
+			break
+	vid.release()
+	cv2.destroyAllWindows()
+\end{lstlisting}
+
+Praktyczne działanie programu przedstawia rysunek \ref{umcs}. W danym przypadku udało się pomyślnie wypisać na ekranie skrót nazwy Uniwersytetu Marii Curie-Słodowskiej.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{U.jpg}
+	\end{subfigure}
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{UM.jpg}
+	\end{subfigure}
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{UMC.jpg}
+	\end{subfigure}
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{UMCS.jpg}
+	\end{subfigure}
+	\caption{Praktyczne działanie programu}
+	\label{umcs}
+\end{figure}
 
 \section{Analiza błędów}
-\lipsum[1]
+
+Aplikacja pomimo przyzwoitej jakości zdjęć w dobrym oświetleniu ma problemy z rozróżnianiem znaków języka migowego odpowiadającym literom "m", "n", "s", "t" i czasami "a". Wynika to z podobieństwa układów dłoni i palców reprezentujących te litery. We wszystkich przypadkach jest to zaciśnięta pięść, gdzie czynnikiem determinującym konkretną literę jest pozycja kciuka - na zewnątrz pięści, wewnątrz lub pomiędzy którymi palcami się on znajduje.
+
+Rozwiązanie tego problemu może mieć wiele składowych. Przede wszystkim zwiększenie ilości danych w zbiorze zdjęć mogłoby mieć znaczący wpływ na izolację wykrywania znaków języka migowego od czynników otoczenia występujących w polu widzenia kamery. Zbiór danych powinien zostać rozszerzony o nowe otoczenia i aktorów. Również duże znaczenie mogłaby wnieść zmiana rozdzielczości obrazów jakie sieć przyjmuje z 200x200 pikseli na wartości wyższe (400x400, 600x600 i tym podobne). Zmiana rozdzielczości obrazu powiększyłaby liczbę szczegółów widocznych na obrazie co ułatwiłoby klasyfikację modelu.
 
 \chapter{Podsumowanie}
-\lipsum[1]
-\lipsum[1]
+
+
 
 \listoftables{} % jeśli są tabele
 \addcontentsline{toc}{chapter}{Spis tabel}
