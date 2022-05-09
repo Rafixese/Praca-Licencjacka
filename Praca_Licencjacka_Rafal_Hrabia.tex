@@ -468,13 +468,30 @@ Przykładowe zdjęcia ze stworzonego zbioru danych znajdują się na zdjęciach 
 	\label{asl_own_photos}
 \end{figure}
 
-\section{Generatory i argumentacja danych}
-\lipsum[1]
-
 \section{Budowa modelu}
+
+Pierwszą czynnością prowadzącą do budowy aplikacji jest przygotowanie danych oraz zbudowanie i wytrenowanie modelu, który będzie wykorzystywany w aplikacji.
+
+Wszystkie wykorzystywane biblioteki do kolejnych podrozdziałów zostały zawarte na listingu \ref{lst:modelimports}.
+
+\begin{lstlisting}[language=Python, caption={Importowane biblioteki}, label={lst:modelimports}]
+	# %% Imports
+	from pathlib import Path
+	
+	import cv2
+	import matplotlib.pyplot as plt
+	import numpy as np
+	import tensorflow as tf
+	from keras_preprocessing.image import ImageDataGenerator
+\end{lstlisting}
+
+\subsection{Generatory i argumentacja danych}
 \lipsum[1]
 
-\section{Trening modelu}
+\subsection{Architektura modelu}
+\lipsum[1]
+
+\subsection{Trening modelu}
 \lipsum[1]
 
 \section{Aplikacja do rozpoznawania języka migowego w czasie rzeczywistym}
