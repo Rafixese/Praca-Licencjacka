@@ -405,6 +405,12 @@ Model stworzony w listingu \ref{lst:mnistmodel} musi zostać skompilowany. Zosta
 	model.fit(x=x_train,y=y_train, epochs=10)
 \end{lstlisting}
 
+Wytrenowany model może zostać poddany ewaluacji na testowych danych (listing \ref{lst:mnisteval}). Model osiąga wyniki w okolicach 98\%-99\% poprawności klasyfikacji\cite{mnistapp}. 
+
+\begin{lstlisting}[language=Python, caption={Ewaluacja modelu\cite{mnistapp}}, label={lst:mnisteval}]
+	model.evaluate(x_test, y_test)
+\end{lstlisting}
+
 % chyba mi się nie chce xD
 %\subsection{Cats vs Dogs}
 %\label{catsdogs}
