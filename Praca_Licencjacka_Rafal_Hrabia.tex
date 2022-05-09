@@ -344,7 +344,7 @@ Sieci \emph{CNN} są używane w wielu istniejących aplikacjach. Można ich uży
 	\item segmentacja trójwymiarowych obrazów medycznych\cite{cnnapps}.
 \end{itemize}
 
-Na potrzeby tej pracy w rozdziałach \ref{mnist} i \ref{catsdogs} zostaną przedstawione przykłady klasyfikacji wieloklasowej i binarnej obrazów.
+Na potrzeby tej pracy w rozdziale \ref{mnist} zostanie przedstawiony przykład klasyfikacji wieloklasowej.
 
 \subsection{MNIST}
 \label{mnist}
@@ -398,8 +398,15 @@ Model do klasyfikacji cyfr na wejściu składa się z jednej warstwy konwolucyjn
 	model.add(Dense(10,activation=tf.nn.softmax))
 \end{lstlisting}
 
+Model stworzony w listingu \ref{lst:mnistmodel} musi zostać skompilowany. Zostaną do niego dodane optymalizator, funkcja straty i metryki. Tak skompilowany model może zostać przedstawiony do treningu (listing \ref{lst:mnisttraining})\cite{mnistapp}. 
+
+\begin{lstlisting}[language=Python, caption={Kompilacja i trening modelu\cite{mnistapp}}, label={lst:mnisttraining}]
+	model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+	model.fit(x=x_train,y=y_train, epochs=10)
+\end{lstlisting}
+
 % chyba mi się nie chce xD
-%\subsection{Cat vs Dogs}
+%\subsection{Cats vs Dogs}
 %\label{catsdogs}
 %\lipsum[1]
 
@@ -431,7 +438,7 @@ Model do klasyfikacji cyfr na wejściu składa się z jednej warstwy konwolucyjn
 \listoffigures{} % jeśli są obrazki
 \addcontentsline{toc}{chapter}{Spis rysunków}
 
-\listofcodes
+\lstlistoflistings
 \addcontentsline{toc}{chapter}{Spis listingów}
 
 \addcontentsline{toc}{chapter}{Bibliografia}
