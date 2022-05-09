@@ -383,7 +383,20 @@ W celu użycia zbioru danych w modelu niezbędne jest zmiana wymiarów tablic, w
 	x_test /= 255
 \end{lstlisting}
 
+Model do klasyfikacji cyfr na wejściu składa się z jednej warstwy konwolucyjnej posiadającej 28 filtrów i warstwy \emph{MaxPooling}, która zmniejszy rozmiar danych dwukrotnie. Następnie po spłaszczeniu danych do postaci jednowymiarowego wektora, dane zostaną przekazane do warstw \emph{Dense}, kolejno do warstwy posiadającej 128 węzłów (neuronów) a następnie do warstwy wyjściowej. Warstwa wyjściowa posiada 10 węzłów czyli dokładnie tyle co klas, które model ma przypisywać. Funkcja aktywacji \emph{softmax} pozwoli na odczyt wyników w formie rozkładu prawdopodobieństwa (listing \ref{lst:mnistmodel})\cite{mnistapp}.
 
+\begin{lstlisting}[language=Python, caption={Budowa modelu\cite{mnistapp}}, label={lst:mnistmodel}]
+	from tensorflow.keras.models import Sequential
+	from tensorflow.keras.layers import Dense, Conv2D, Dropout, Flatten, MaxPooling2D
+	# Creating a Sequential Model and adding the layers
+	model = Sequential()
+	model.add(Conv2D(28, kernel_size=(3,3), input_shape=input_shape))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Flatten()) # Flattening the 2D arrays for fully connected layers
+	model.add(Dense(128, activation=tf.nn.relu))
+	model.add(Dropout(0.2))
+	model.add(Dense(10,activation=tf.nn.softmax))
+\end{lstlisting}
 
 \subsection{Cat vs Dogs}
 \label{catsdogs}
