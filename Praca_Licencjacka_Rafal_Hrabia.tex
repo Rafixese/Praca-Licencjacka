@@ -639,7 +639,9 @@ Stworzony model charakteryzuje się wysoką liczbą (20,028,782) trenowalnych pa
 
 \subsection{Trening modelu}
 
-\begin{lstlisting}[language=Python, caption={Trening modelu}, label={lst:modeltrain}]
+Trening modelu przebiega w oparciu o zatrzymywanie procesu uczenia na podstawie wyników poszczególnych epok. W wypadku, gdy model zaczyna się przetrenowywać uczenie modelu jest zatrzymywane. Innym równie ważnym czynnikiem jest mechanizm \emph{ModelCheckpoint}. Pozwala on na zapisywanie obiektu modelu po każdej epoce treningu w celu późniejszego wczytania najlepszej wersji.
+
+\begin{lstlisting}[language=Python, caption={Trening modelu i mechanizmy \emph{Callback}}, label={lst:modeltrain}]
 	# %% Fit
 	model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
 		filepath=models_path.joinpath('{epoch:02d}-{val_loss:.2f}.hdf5'),
@@ -656,31 +658,29 @@ Stworzony model charakteryzuje się wysoką liczbą (20,028,782) trenowalnych pa
 	
 \end{lstlisting}
 
-\begin{lstlisting}[language=Python, caption={Wizualizacja wyników}, label={lst:modelplt}]
-	# %% Plot
-	training_loss = history.history['loss']
-	test_loss = history.history['val_loss']
-	train_acc = history.history['accuracy']
-	val_acc = history.history['val_accuracy']
-	
-	epoch_count = range(1, len(training_loss) + 1)
-	
-	plt.figure(figsize=(15, 5))
-	plt.subplot(1, 2, 1)
-	plt.plot(epoch_count, training_loss)
-	plt.plot(epoch_count, test_loss)
-	plt.legend(['Train Loss', 'Test Loss'])
-	plt.xlabel('Epoch')
-	plt.ylabel('Loss')
-	
-	plt.subplot(1, 2, 2)
-	plt.plot(epoch_count, train_acc)
-	plt.plot(epoch_count, val_acc)
-	plt.legend(['Train Accuracy', 'Validation Accuracy'])
-	plt.xlabel('Epoch')
-	plt.ylabel('Accuracy')
-	plt.show()
+Model bardzo szybko osiąga dosyć wysoki wynik powyżej 90\%. Po czwartej epoce model zaczyna się przetrenowywać i dokładność na zbiorze walidacyjnym spada. Z danej sesji treningowym najlepszym modelem będzie model zapisany po 4 epoce.
+
+\begin{lstlisting}[language=Python, caption={Przykładowy trening modelu}, label={lst:modeltrainsession}]
+	729/729 [==============================] - 108s 138ms/step - loss: 1.0876 - accuracy: 0.6626 - val_loss: 0.4911 - val_accuracy: 0.8657
+	Epoch 2/999
+	729/729 [==============================] - 133s 179ms/step - loss: 0.1650 - accuracy: 0.9452 - val_loss: 0.4953 - val_accuracy: 0.8691
+	Epoch 3/999
+	729/729 [==============================] - 126s 171ms/step - loss: 0.0786 - accuracy: 0.9738 - val_loss: 0.3581 - val_accuracy: 0.9114
+	Epoch 4/999
+	729/729 [==============================] - 124s 168ms/step - loss: 0.0497 - accuracy: 0.9839 - val_loss: 0.3348 - val_accuracy: 0.9203
+	Epoch 5/999
+	729/729 [==============================] - 108s 145ms/step - loss: 0.0386 - accuracy: 0.9871 - val_loss: 0.3579 - val_accuracy: 0.9043
+	...
 \end{lstlisting}
+
+Na wykresie \ref{model_train} został zwizualizowany proces treningu i towarzyszące mu parametry dokładności i straty dla danych treningowych i walidacyjnych.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.31]{train.png}
+	\caption{Wizualizacja treningu}
+	\label{model_train}
+\end{figure}
 
 \section{Aplikacja do rozpoznawania języka migowego w czasie rzeczywistym}
 \lipsum[1]
