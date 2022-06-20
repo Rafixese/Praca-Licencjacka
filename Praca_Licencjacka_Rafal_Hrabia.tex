@@ -486,8 +486,10 @@ Wszystkie wykorzystywane biblioteki do kolejnych podrozdziałów zostały zawart
 	from keras_preprocessing.image import ImageDataGenerator
 \end{lstlisting}
 
+Budowa modelu CNN będzie odbywać się z wykorzystaniem biblioteki \emph{Keras}, która znajduje się w bibliotece \emph{tensorflow}. Zawiera ona narzędzia niezbędne do tworzenia, trenowania i wykorzystywania modeli uczenia maszynowego. Dane, których będziemy używać w celu treningu modelu są w formacie zdjęć, więc rozsądnym jest użycie klasy \emph{ImageDataGenerator} z biblioteki \emph{keras\_preprocessing} w celu wygodnego wczytywania obrazów podczas uczenia. 
+
 \subsection{Generatory i argumentacja danych}
-Generatory to bardzo popularna metoda wczytywania danych prosto z folderów zawierających zbiór zdjęć. Generator z \emph{Keras API} automatycznie dzieli wczytane obrazy na klasy jeśli są umieszczone w określonej strukturze folderów na dysku. Pozwalają również na bardzo prostą argumentację danych poprzez różne przekształcenia obrazu, które są losowo aplikowane na wczytywane obrazy. Jest to bardzo dogodne podejście, znacznie wygodniejsze niż wczytywanie wszystkich obrazów do pamięci operacyjnej na raz.
+Generatory to bardzo popularna metoda wczytywania danych prosto z folderów zawierających zbiór zdjęć. Generator z \emph{Keras API} automatycznie dzieli wczytane obrazy na klasy jeśli są umieszczone w określonej strukturze folderów na dysku \cite{idg}. Pozwalają również na bardzo prostą augmentację danych poprzez różne przekształcenia obrazu, które są losowo aplikowane na wczytywane obrazy. Jest to bardzo dogodne podejście, znacznie wygodniejsze niż wczytywanie wszystkich obrazów do pamięci operacyjnej na raz.
 
 W celu ułatwienia odwoływania się do poszczególnych ścieżek na dysku dobrą praktyką jest zdefiniowanie zmiennych przechowujących te ścieżki za pomocą biblioteki \emph{pathlib} (listing \ref{lst:modelpaths}).
 
@@ -538,9 +540,9 @@ Obiekty generatorów pozwalają na proste podzielenie danych na podzbiory trenin
 	
 \end{lstlisting}
 
-Na tym etapie generatory są gotowe do użycia w sieci neuronowej. Generatory można przetestować ręcznie i wyświetlić wczytywane obrazy w sposób przedstawiony na listingu \ref{lst:modelgentest} za pomocą biblioteki \emph{OpenCV}.
+Generatory można przetestować ręcznie i wyświetlić wczytywane obrazy w sposób przedstawiony na listingu \ref{lst:modelgentest} za pomocą biblioteki \emph{OpenCV} \cite{opencv}.
 
-\begin{lstlisting}[language=Python, caption={Test generatorów}, label={lst:modelgentest}]
+\begin{lstlisting}[language=Python, caption={Wczytanie i wyświetlenie pierwszych 10 zdjęć za pomocą ImageDataGenerator}, label={lst:modelgentest}]
 	# %% test generators
 	def decode_class(cls, one_hot):
 		return cls[np.argmax(one_hot)]
@@ -556,9 +558,11 @@ Na tym etapie generatory są gotowe do użycia w sieci neuronowej. Generatory mo
 		cv2.destroyAllWindows()
 \end{lstlisting}
 
+Na tym etapie generatory są gotowe do użycia w sieci neuronowej. Użycie klasy \emph{ImageDataGenerator} pozwala na bardzo wygodną augmentację danych i doczytywanie zdjęć w trakcie treningu modelu, a nie wczytania całości zbioru danych do pamięci operacyjnej przed treningiem, co w przypadku większych zbiorów zdjęć byłoby zadaniem niemożliwym z racji ograniczonych zasobów pamięci RAM.
+
 \subsection{Architektura modelu}
 
-Przedstawiony model w listingu \ref{lst:model} i jego struktura została wyłoniona jako najlepsza z testowanych konfiguracji sieci w procesie tworzenia aplikacji. Zastosowane zostały warstwy \emph{Conv2D} występujące w parach, które przedziela warstwa \emph{MaxPooling2D}. Warstwy konwolucyjne posiadają standardowy rozmiar jądra 3x3 i funkcję aktywacji \emph{relu}. W kolejnych warstwach zastosowano rosnącą dwukrotnie, w stosunku do poprzedniej pary, liczbę filtrów.
+Przedstawiony model w listingu \ref{lst:model} i jego struktura została wyłoniona jako najlepsza z testowanych konfiguracji sieci w procesie tworzenia aplikacji. Zastosowane zostały warstwy \emph{Conv2D} występujące w parach, pomiędzy którymi znajduje się warstwa \emph{MaxPooling2D}. Warstwy konwolucyjne posiadają standardowy rozmiar jądra 3x3 i funkcję aktywacji \emph{relu}. W kolejnych warstwach zastosowano rosnącą dwukrotnie, w stosunku do poprzedniej pary, liczbę filtrów.
 
 \begin{lstlisting}[language=Python, caption={Definicja modelu}, label={lst:model}]
 	 # %% Build model
@@ -590,7 +594,7 @@ Przedstawiony model w listingu \ref{lst:model} i jego struktura została wyłoni
 	model.summary()
 \end{lstlisting}
 
-Stworzony model charakteryzuje się wysoką liczbą (20,028,782) trenowalnych parametrów, głównie z powodu dużej liczby połączeń w przedostatniej warstwie (listing \ref{lst:modelsum}). Pomimo znacznej liczby parametrów model jest wystarczająco szybki aby przetwarzać w czasie rzeczywistym obraz z kamery.
+Stworzony model charakteryzuje się wysoką liczbą (20 028 782) trenowalnych parametrów, głównie z powodu dużej liczby połączeń w przedostatniej warstwie (listing \ref{lst:modelsum}). Pomimo znacznej liczby parametrów model jest wystarczająco szybki aby przetwarzać w czasie rzeczywistym obraz z kamery.
 
 \begin{lstlisting}[language=Python, caption={Podsumowanie modelu}, label={lst:modelsum}]
 	Model: "sequential"
@@ -645,16 +649,21 @@ Trening modelu przebiega w oparciu o zatrzymywanie procesu uczenia na podstawie 
 \begin{lstlisting}[language=Python, caption={Trening modelu i mechanizmy \emph{Callback}}, label={lst:modeltrain}]
 	# %% Fit
 	model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
-		filepath=models_path.joinpath('{epoch:02d}-{val_loss:.2f}.hdf5'),
+		# tekst formatujacy nazwe pliku do ktorego zapisywany jest model
+		filepath=models_path.joinpath('{epoch:02d}-{val_loss:.2f}.hdf5'), 
+		# zapisz caly model
 		save_weights_only=False,
-		monitor='val_accuracy',
+		monitor='val_accuracy', 
 		mode='max',
+		# zapisz kazdy model
 		save_best_only=False)
 	
 	history = model.fit(train_gen,
 		epochs=999,
 		validation_data=valid_gen,
+		# dodanie wczesniej utworzonego mechanizmu ModelCheckpoint do zapisywania modelu i EarlyStopping do zatrzymywania treningu po spadku precyzji
 		callbacks=[model_checkpoint_callback, tf.keras.callbacks.EarlyStopping(patience=2)],
+		# liczba procesow uzywanych do wczytywania obrazow
 		workers=20)
 	
 \end{lstlisting}
@@ -676,16 +685,19 @@ Model bardzo szybko osiąga dosyć wysoki wynik powyżej 90\%. Po czwartej epoce
 
 Na wykresie \ref{model_train} został zwizualizowany proces treningu i towarzyszące mu parametry dokładności i straty dla danych treningowych i walidacyjnych.
 
+Średni czas potrzebny na trening modelu wynosił od 6 do 10 minut. Model był trenowany na komputerze posiadającym procesor Intel Core i9 10850K na fabrycznym taktowaniu rdzeni oraz wykorzystywał układ GPU - Nvidia RTX 3080. W celu trenowania modelu z wykorzystaniem karty graficznej zainstalowane zostało oprogramowanie \emph{Nvidia Cuda}, które jest wykorzystywane w celu przeprowadzania obliczeń na procesorach graficznych Nvidia \cite{cuda}.
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.31]{train.png}
+	\hspace*{-3cm} 
+	\includegraphics[scale=0.4]{train.png}
 	\caption{Wizualizacja treningu}
 	\label{model_train}
 \end{figure}
 
 \section{Aplikacja do rozpoznawania języka migowego w czasie rzeczywistym}
 
-Stworzona aplikacja jest minimalistycznym programem o ograniczonym interfejsie, który jednak dowodzi wykonalności projektu. Aplikacja z dobrze wyszkolonym modelem jest w stanie w czasie rzeczywistym z dużą skutecznością rozpoznawać znaki pokazywane przez użytkownika.
+W ramach niniejszej pracy licencjackiej powstała aplikacja rozpoznająca znaki języka ASL w czasie rzeczywistym, stanowiąca niejako studium wykonalności. Aplikacja z dobrze wytrenowanym modelem jest w stanie w czasie rzeczywistym z dużą skutecznością rozpoznawać znaki pokazywane przez użytkownika.
 
 W celu implementacji skorzystano z bibliotek \emph{OpenCV}, \emph{Tensorflow}, \emph{numpy} i \emph{time}. Przed wystąpieniem głównej pętli programowej inicjalizowane są zmienne odpowiadające za między innymi interfejs kamery i wczytany model. Metoda \emph{decode\_class} odpowiada za translację wektora zwracanego przez model na konkretną literę alfabetu (listing \ref{lst:appimports}).
 
@@ -779,7 +791,7 @@ Praktyczne działanie programu przedstawia rys. \ref{umcs}. W danym przypadku ud
 
 \section{Analiza błędów}
 
-Aplikacja pomimo przyzwoitej jakości zdjęć w dobrym oświetleniu ma problemy z rozróżnianiem znaków języka migowego odpowiadającym literom "m", "n", "s", "t" i czasami "a". Wynika to z podobieństwa układów dłoni i palców reprezentujących te litery. We wszystkich przypadkach jest to zaciśnięta pięść, gdzie czynnikiem determinującym konkretną literę jest pozycja kciuka - na zewnątrz pięści, wewnątrz lub pomiędzy którymi palcami się on znajduje.
+Aplikacja pomimo odpowiednio przygotowanych zdjęć i dobrego oświetlenia ma problemy z rozróżnianiem znaków języka migowego odpowiadającym literom "m", "n", "s", "t" i czasami "a". Wynika to z podobieństwa układów dłoni i palców reprezentujących te litery. We wszystkich przypadkach jest to zaciśnięta pięść, gdzie czynnikiem determinującym konkretną literę jest pozycja kciuka - na zewnątrz pięści, wewnątrz lub pomiędzy którymi palcami się on znajduje, przykładowo tak jak w znakach odpowiadającym literom "m", "n" i "t".
 
 Rozwiązanie tego problemu może mieć wiele składowych. Przede wszystkim zwiększenie ilości danych w zbiorze zdjęć mogłoby mieć znaczący wpływ na izolację wykrywania znaków języka migowego od czynników otoczenia występujących w polu widzenia kamery. Zbiór danych powinien zostać rozszerzony o nowe otoczenia i aktorów. Również duże znaczenie mogłaby wnieść zmiana rozdzielczości obrazów jakie sieć przyjmuje z 200x200 pikseli na wartości wyższe (400x400, 600x600 i tym podobne). Zmiana rozdzielczości obrazu powiększyłaby liczbę szczegółów widocznych na obrazie co ułatwiłoby klasyfikację modelu.
 
