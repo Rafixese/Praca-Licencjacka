@@ -395,6 +395,13 @@ Model do klasyfikacji cyfr na wejściu składa się z jednej warstwy konwolucyjn
 	model.add(Dense(10,activation=tf.nn.softmax))
 \end{lstlisting}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{model_plot.png}
+	\caption{Wizualizacja modelu}
+	\label{model_plot}
+\end{figure}
+
 Model stworzony w listingu \ref{lst:mnistmodel} musi zostać skompilowany. Zostaną do niego dodane optymalizator, funkcja straty i metryki. Tak skompilowany model może zostać przedstawiony do treningu (listing \ref{lst:mnisttraining}) \cite{mnistapp}. 
 
 \begin{lstlisting}[language=Python, caption={Kompilacja i trening modelu \cite{mnistapp}}, label={lst:mnisttraining}]
@@ -419,24 +426,22 @@ Celem niniejszej pracy jest stworzenie aplikacji, która pozwoli na rozpoznawani
 
 \section{Stworzenie zbioru obrazów}
 
-Z racji wątpliwej jakości zbiorów danych dostępnych w ogólnodostępnych źródłach, takich jak portal \emph{Kaggle.com}, na potrzeby tej pracy został stworzony autorski zbiór około 51821 zdjęć przedstawiających 26 znaków z języka \emph{American Sign Language}.
+Z racji słabej jakości zbiorów danych dostępnych w ogólnodostępnych źródłach, takich jak portal \emph{Kaggle.com}, na potrzeby tej pracy został stworzony autorski zbiór około 51821 zdjęć przedstawiających 26 znaków z języka \emph{American Sign Language}.
 
-Przeprowadzone testy na zbiorach danych pobranych ze strony z \emph{Kaggle.com} nie spełniały oczekiwań. Stworzony model miał problemy z treningiem i stabilnością. Było to spowodowane bardzo złą jakością większości zdjęć ze zbioru. Oświetlenie gra kluczową rolę w dziedzinie rozpoznawania obrazu. Wspomniane zdjęcia były w ogólnym pojęciu bardzo ciemne ze względu na prawdopodobny brak jakiegokolwiek źródła światła, a czasem wręcz zdjęcie zostało zrobione "pod" światło(zdjęcie \ref{asl_bad_photo}). 
+Przeprowadzone testy na zbiorach danych pobranych ze strony z \emph{Kaggle.com} \cite{asl1}\cite{asl2} nie spełniały oczekiwań. Stworzony model miał problemy z treningiem i stabilnością. Było to spowodowane bardzo złą jakością większości zdjęć ze zbioru. Oświetlenie gra kluczową rolę w dziedzinie rozpoznawania obrazu. Wspomniane zdjęcia były w ogólnym pojęciu bardzo ciemne ze względu na prawdopodobny brak jakiegokolwiek źródła światła, a czasem wręcz zdjęcie zostało zrobione "pod" światło (rys. \ref{asl_bad_photo}). 
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.6]{asl_bad_photo.jpg}
-	\caption{Zdjęcie złej jakości}
+	\caption{Słabej jakości zdjęcie znaku ASL ze zbioru danych opublikowanych na \emph{Kaggle.com} \cite{asl1}}
 	\label{asl_bad_photo}
 \end{figure}
 
-Dobra jakość zdjęcia jest niezbędna przy próbie wykrywania znaków języków migowych. Często znaki te różnią się pozycją jednego palca. Model nie był w stanie zauważyć takich zmian nie widząc chociaż trochę wyraźnych krawędzi pomiędzy poszczególnymi częściami dłoni użytkownika.
-
-Błędy spowodowane złym oświetleniem wpłynęły na kładzenie szczególnej uwagi na zachowanie w miarę poprawnego oświetlenia z przodu użytkownika przy tworzeniu nowego zbioru danych.
+Dobra jakość zdjęcia jest niezbędna przy próbie wykrywania znaków języków migowych. Często znaki te różnią się pozycją jednego palca. Model nie był w stanie zauważyć takich zmian nie widząc wyraźnych krawędzi pomiędzy poszczególnymi częściami dłoni użytkownika.
 
 Ważnym aspektem było też zachowanie realizmu przy tworzeniu zbioru danych. Zdjęcia zawierają nie tylko dłoń na w miarę jednolitym tle, ale również częściowo postać użytkownika i fragmenty niejednolitego otoczenia za nim. Dłoń użytkownika również w realistycznych warunkach będzie znajdowała się w różnych odległościach, pozycjach na ekranie i pod różnymi kontami względem kamery. W takich warunkach model będzie eksploatowany w stworzonej aplikacji więc racjonalnym podejściem było wprowadzić te zmiany już na etapie treningu. 
 
-Przykładowe zdjęcia ze stworzonego zbioru danych znajdują się na zdjęciach \ref{asl_own_photos}.
+Przykładowe zdjęcia ze stworzonego zbioru danych znajdują się na rys. \ref{asl_own_photos}.
 
 \begin{figure}[h]
 	\centering
@@ -460,7 +465,7 @@ Przykładowe zdjęcia ze stworzonego zbioru danych znajdują się na zdjęciach 
 			\includegraphics[width=0.7\textwidth]{asl_d.png}
 			\caption{D}
 		\end{subfigure}
-	\caption{Zestawienie przykładowych obrazów ze stworzonego zbioru}
+	\caption{Zestawienie przykładowych obrazów z autorskiego zbioru liter języka ASL}
 	\label{asl_own_photos}
 \end{figure}
 
