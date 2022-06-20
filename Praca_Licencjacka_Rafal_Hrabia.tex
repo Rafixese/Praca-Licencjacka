@@ -82,27 +82,28 @@
 \addcontentsline{toc}{chapter}{Wstęp}
 \label{Wstep}
 %Mega ogólne sprawy dotyczące tego co chce zrobić
-Sieci neuronowe mają za zadanie naśladowanie zachowań sieci neuronów znajdujących się w mózgu człowieka. Zostały stworzone do rozwiązywania zadań trudnych lub prawie niemożliwych do opisania za pomocą reguł, wyrażeń logicznych i innych narzędzi programistycznych. Wraz z rozwojem sieci neuronowych powstało wiele wariantów, które ze względu na swoją budowę lepiej lub gorzej sprawdzają się w różnych problemach. W przypadku rozpoznawania obrazów w postaci dwu-wymiarowej macierzy dla danych monochromatycznych lub trój-wymiarowej macierzy dla zdjęć kolorowych jednym z najlepszych wyborów będą sieci konwolucyjne. Sieci te rozpoznają wzorce, poczynając od linii horyzontalnych i wertykalnych, a w dalszych warstwach kończąc na skomplikowanych strukturach. Budowa i działanie sieci konwolucyjnych daje wielki potencjał do klasyfikacji obrazów. Ta praca przedstawi przykład takiej klasyfikacji wieloklasowej z użyciem sieci konwolucyjnych na przykładzie alfabetu Amerykańskiego Języka Migowego. 
+Sieci neuronowe mają za zadanie naśladowanie zachowań sieci neuronów znajdujących się w mózgu człowieka. Zostały stworzone do rozwiązywania zadań trudnych lub prawie niemożliwych do opisania za pomocą reguł, wyrażeń logicznych i innych narzędzi programistycznych. Wraz z rozwojem sieci neuronowych powstało wiele wariantów, które ze względu na swoją budowę lepiej lub gorzej sprawdzają się w różnych problemach. W przypadku rozpoznawania obrazów w postaci dwu-wymiarowej macierzy dla danych monochromatycznych lub trój-wymiarowej macierzy dla zdjęć kolorowych jednym z najlepszych wyborów będą sieci konwolucyjne. Sieci te rozpoznają wzorce, poczynając od linii horyzontalnych i wertykalnych, a w dalszych warstwach kończąc na skomplikowanych strukturach. Budowa i działanie sieci konwolucyjnych daje wielki potencjał do klasyfikacji obrazów. Niniejsza praca licencjacka przedstawia przykład wieloklasowej klasyfikacji tj. rozpoznawania liter alfabetu ASL przy wykorzystaniu sieci konwolucyjnych.
 
 \chapter*{Cel i zakres pracy}
 \addcontentsline{toc}{chapter}{Cel i zakres pracy}
 \label{Cel i zakres pracy}
 %celem pracy jest napisanie programu bla bla
-Celem pracy jest stworzenie programu wyposażonego w wytrenowany model do rozpoznawania obrazu, który w czasie rzeczywistym używając kamery internetowej będzie w stanie odczytać i wyświetlić na ekranie transkrypcję znaków języka migowego pokazywanych przez osobę znajdującą się w polu widzenia kamery. Dodatkowo do pracy będą składać się: utworzenie zbioru danych składającego się z około 50000 zdjęć zawierających wszystkie litery alfabetu ASL, utworzenie modelu z warstw konwolucyjnych i gęstych oraz wytrenowanie modelu i tuning parametrów. W części teoretycznej pracy zostanie przybliżony temat języka migowego American Sign Language, jak również temat konwolucyjnych sieci neuronowych i sposobu działania modeli.
+Celem pracy jest stworzenie programu wyposażonego w wytrenowany model do rozpoznawania obrazu, który w czasie rzeczywistym używając kamery internetowej będzie w stanie odczytać i wyświetlić na ekranie transkrypcję znaków języka migowego pokazywanych przez osobę znajdującą się w polu widzenia kamery. Dodatkowo, w celu osiągnięcia celu pracy, zrealizowano następujące zadania: utworzenie zbioru danych składającego się z około 50000 zdjęć zawierających wszystkie litery alfabetu ASL, utworzenie modelu z warstw konwolucyjnych i gęstych oraz wytrenowanie modelu i tuning parametrów. W teoretycznej części pracy przybliżono temat języka migowego American Sign Language, jak również temat konwolucyjnych sieci neuronowych i sposobu działania modeli.
 
 \chapter{Język migowy American Sign Language}
-American Sign Language (Amerykański Język Migowy, ASL) to złożony język wizualno-przestrzenny używany przez ludzi głuchoniemych w Stanach Zjednoczonych Ameryki oraz anglojęzycznych częściach Kanady. Jest to w pełni kompletny język naturalny. ASL jest językiem natywnym dla wielu głuchoniemych mężczyzn, kobiet i dzieci, a także niektórych słyszących dzieci w rodzinach, gdzie opiekunowie prawni są niesłyszący\cite{nakamura}.
+American Sign Language (Amerykański Język Migowy, ASL) to złożony język wizualno-przestrzenny używany przez osoby niesłyszące w Stanach Zjednoczonych Ameryki oraz anglojęzycznych częściach Kanady. Jest to w pełni kompletny język naturalny. ASL jest językiem natywnym dla wielu mężczyzn, kobiet i dzieci, a także niektórych słyszących dzieci w rodzinach, gdzie opiekunowie prawni są niesłyszący \cite{nakamura}.
 \section{Historia}
-Pochodzenie dzisiejszej społeczności osób głuchoniemych w Stanach Zjednoczonych jest powszechnie utożsamiane z założeniem pierwszej szkoły dla niesłyszących - American School for the Deaf (ASD), założonej w 1817 roku w Hartford, Connecticut. Przed założeniem szkoły ASD na terenie USA działało wiele niezależnych społeczności, poczynając od małych grup o wielkości pojedynczej rodziny do większych - całych wsi. W małych społecznościach uformowały się niezależne znaki i systemy języka migowego, które są obecne po dziś dzień w tych środowiskach. Istnieją dowody na to, że głuchonieme dzieci kształtowały swoje własne systemy języków migowych, które były o wiele bardziej wyrafinowane od tych, używanych w społeczności, w których się znajdowały.\cite{bahan}
+Pochodzenie dzisiejszej społeczności osób niesłyszących w Stanach Zjednoczonych jest powszechnie utożsamiane z założeniem pierwszej szkoły dla niesłyszących - American School for the Deaf (ASD), założonej w 1817 roku w Hartford, Connecticut. Przed założeniem szkoły ASD na terenie USA działało wiele niezależnych społeczności, poczynając od małych grup o wielkości pojedynczej rodziny do większych - całych wsi. W małych społecznościach uformowały się niezależne znaki i systemy języka migowego, które są obecne po dziś dzień w tych środowiskach. Istnieją dowody na to, że niesłyszące dzieci kształtowały swoje własne systemy języków migowych, które były o wiele bardziej wyrafinowane od tych, używanych w społeczności, w których się znajdowały \cite{bahan}.
 
-Istnieją również doniesienia o innym niezależnie uformowanym systemie języka migowego Martha’s Vineyard Sign Language (MVSL), który istniał przed założeniem American School for the Deaf. Język ten był głównie używany w wsi Chilmark na wybrzeżu Massachusetts. Powstanie MVSL zapoczątkował fakt, że wspomniana społeczność Chilmark miała wysoki odsetek mutacji genetycznych prowadzących do głuchoty. W skali miasteczka około 4 procent mieszkańców było głuchoniemych. Wynikało to z wysokiego odsetka mieszanych małżeństw od wielu pokoleń, począwszy od hrabstwa Kent w Angli, zanim wieś Chilmark została założona w roku 1690.\cite{groce} Mieszkańcy, którzy nie byli głuchoniemi również posługiwali się językiem MVSL, wówczas gdy znajdowali się w towarzystwie osób z niepełnosprawnością ale również, gdy w gronie rozmówców nie było osoby głuchoniemej. Język był używany do czasu założenia szkoły dla osób głuchoniemych ASD w Hartford. Dzieci z wsi Chilmark zaczęto wysyłać do szkoły American School for the Deaf we wczesnych latach dwudziestych XIX wieku. Skutkowało to zatarciem się języków MVSL i nowego języka migowego ewoluującego w dzisiejszy język ASL.\cite{bahan}
+Istnieją również doniesienia o innym niezależnie uformowanym systemie języka migowego Martha’s Vineyard Sign Language (MVSL), który istniał przed założeniem American School for the Deaf. Język ten był głównie używany w wsi Chilmark na wybrzeżu Massachusetts. Powstanie MVSL zapoczątkował fakt, że wspomniana społeczność Chilmark miała wysoki odsetek mutacji genetycznych prowadzących do głuchoty. W skali miasteczka około 4 procent mieszkańców było niesłyszących. Wynikało to z wysokiego odsetka mieszanych małżeństw od wielu pokoleń, począwszy od hrabstwa Kent w Angli, zanim wieś Chilmark została założona w roku 1690 \cite{groce}. Mieszkańcy, którzy nie byli niesłyszący również posługiwali się językiem MVSL, wówczas gdy znajdowali się w towarzystwie osób z niepełnosprawnością ale również, gdy w gronie rozmówców nie było osoby niesłyszącej. Język był używany do czasu założenia szkoły dla osób niesłyszących ASD w Hartford. Dzieci z wsi Chilmark zaczęto wysyłać do szkoły American School for the Deaf we wczesnych latach dwudziestych XIX wieku. Skutkowało to zatarciem się języków MVSL i nowego języka migowego ewoluującego w dzisiejszy język ASL \cite{bahan}.
 
-Kiedy szkoła dla głuchoniemych została założona, stała się miejscem, gdzie wiele pomniejszych systemów migowych stykało i mieszało się ze sobą przez 175 lat. Z mieszanki tych języków powstał dzisiejszy język ASL. Głuchoniemy nauczyciel - Laurent Clerc, pochodzący z Francji, był pierwszym nauczycielem w wspomnianej placówce. Z kraju swojego pochodzenia przywiózł wiedzę o Francuskim Języku Migowym, którego znaków nauczał w amerykańskiej szkole. Ta sytuacja spowodowała bardzo mocne doprawienie wówczas powstającego języka ASL o aspekty zaciągnięte z Francuskiego Języka Migowego. Na dzień dzisiejszy około 60 procent współczesnego systemu ASL opiera się na starym migowym języku Francuskim.\cite{bahan}
+Kiedy szkoła dla niesłyszących została założona, stała się miejscem, gdzie wiele pomniejszych systemów migowych stykało i mieszało się ze sobą przez 175 lat. Z mieszanki tych języków powstał dzisiejszy język ASL. Niesłyszący nauczyciel - Laurent Clerc, pochodzący z Francji, był pierwszym nauczycielem w wspomnianej placówce. Z kraju swojego pochodzenia przywiózł wiedzę o Francuskim Języku Migowym, którego znaków nauczał w amerykańskiej szkole. Ta sytuacja spowodowała bardzo mocne doprawienie wówczas powstającego języka ASL o aspekty zaciągnięte z Francuskiego Języka Migowego. Na dzień dzisiejszy około 60 procent współczesnego systemu ASL opiera się na starym migowym języku Francuskim \cite{bahan}.
 
 
 \section{Populacja}
-Informacje dostępne w internecie nie dają jednoznacznej odpowiedzi na pytanie - ile osób używa języka ASL. Wyszukane rezultaty są bardzo niejednoznaczne\cite{population}.
+Informacje dostępne w internecie nie dają jednoznacznej odpowiedzi na pytanie - ile osób używa języka ASL. Wyszukane rezultaty są bardzo niejednoznaczne \cite{population}.
 \begin{table}[h!]
+	\caption{Szacowane rankingi użytkowników ASL według różnych źródeł}
 	\resizebox{\textwidth}{!}{
 	\begin{tabular}{@{}ll@{}}
 			\toprule
@@ -163,83 +164,83 @@ Informacje dostępne w internecie nie dają jednoznacznej odpowiedzi na pytanie 
 			\end{tabular}	& Wikipedia (Wikimedia, 2003) \\ \bottomrule
 		\end{tabular}
 	}
-	\caption{Szacowane rankingi użytkowników ASL według różnych źródeł}
 	\label{tab:ratings}
 \end{table}
-Znalezione szacunkowe (Tabela \ref{tab:ratings}) liczby użytkowników języka ASL wahają się począwszy od 100000 do nawet 15000000. Warto zwrócić uwagę, że prawdopodobnie szacunki Aetna InteliHealth zostały omyłkowo utożsamione z użytkownikami języka ASL, a tak naprawdę mogą przedstawiać liczbę osób ze znacznym i całkowitym ubytkiem słuchu\cite{population}.
+Znalezione szacunkowe (Tabela \ref{tab:ratings}) liczby użytkowników języka ASL wahają się począwszy od 100 tysięcy do nawet 15 milionów. Warto zwrócić uwagę, że prawdopodobnie szacunki Aetna InteliHealth zostały omyłkowo utożsamione z użytkownikami języka ASL, a tak naprawdę mogą przedstawiać liczbę osób ze znacznym i całkowitym ubytkiem słuchu \cite{population}.
 
 Starając się uogólnić wszystkie szacunki płynące ze źródeł internetowych, kształtują się dwa główne twierdzenia:
 \begin{itemize}
 	\item Jest mniej niż dwa miliony użytkowników ASL, ale bardziej prawdopodobne, że ta liczba jest mniejsza i wynosi mniej niż półtora miliona ludzi w Stanach Zjednoczonych Ameryki;
-	\item ASL może być trzecim najczęściej występującym językiem w Stanach Zjednoczonych\cite{population}.
+	\item ASL może być trzecim najczęściej występującym językiem w Stanach Zjednoczonych \cite{population}.
 \end{itemize}
-Trzeba zauważyć jednak, że publikacje i twierdzenia, w których został poruszony temat populacji użytkowników języka ASL pochodzą głównie z lat dwutysięcznych i powinny być brane pod uwagę z dystansem. Obecna liczba ludzi używających tego języka może być mniejsza lub znacznie bardziej prawdopodobnie - większa.
+
+Zaprezentowane w tabeli \ref{tab:ratings} dane pochodzą głównie z okresu lat dwutysięcznych. W trakcie pisania niniejszej pracy prawdopodobnie nie istniały bardziej aktualne i ogólnodostępne źródła.
 
 \section{American Manual Alphabet}
-American Manual Alphabet to zbiór różnych gestów dłonią reprezentujący wszystkie litery angielskiego alfabetu. Są one ważnym elementem komunikacji i uzupełniają American Sign Language o zestaw znaków pozwalających na wyrażenie słów, dla których rozmówca nie zna konkretnego znaku lub nazw własnych, takich jak imiona czy nazwy firm. Często używane są przez użytkowników ASL dla upewnienia się, że idea tego co chcieli powiedzieć została dokładnie i zrozumiale zakomunikowana drugiej stronie rozmowy. Początkujący użytkownicy języka ASL, z racji ograniczonego zbioru znaków często posiłkują się alfabetem migowym do komunikowania słów, dla których nie znają odpowiadających znaków\cite{costello}.
+American Manual Alphabet to zbiór różnych gestów dłonią reprezentujący wszystkie litery angielskiego alfabetu. Są one ważnym elementem komunikacji i uzupełniają American Sign Language o zestaw znaków pozwalających na wyrażenie słów, dla których rozmówca nie zna konkretnego znaku lub nazw własnych, takich jak imiona czy nazwy firm. Często używane są przez użytkowników ASL dla upewnienia się, że idea tego co chcieli powiedzieć została dokładnie i zrozumiale zakomunikowana drugiej stronie rozmowy. Początkujący użytkownicy języka ASL, z racji ograniczonego zbioru znaków często posiłkują się alfabetem migowym do komunikowania słów, dla których nie znają odpowiadających znaków \cite{costello}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.45]{ama.png}
-\caption{American Manual Alphabet\cite{wikipedia_2022}}
+\caption{American Manual Alphabet \cite{wikipedia_2022}}
 \end{figure}
 
-W alfabecie znajduje się 26 znaków odpowiadających literom języka angielskiego. Na odpowiedniki liter składa się 19 ułożeń dłoni. Niektóre ułożenia występują kilkukrotnie tak jak litery "i" i "j" oraz "p" i "k". Różnica pomiędzy tymi znakami polega na ruchu dłonią (przy literze "j" występuje ruch w kształcie półkola) lub pozycji względem ciała (przy literze "k" dłoń jest skierowana palcami do góry, a przy literze "p" w dół lub w bok)\cite{costello}.
+W alfabecie znajduje się 26 znaków odpowiadających literom języka angielskiego. Na odpowiedniki liter składa się 19 ułożeń dłoni. Niektóre ułożenia występują kilkukrotnie tak jak litery "i" i "j" oraz "p" i "k". Różnica pomiędzy tymi znakami polega na ruchu dłonią (przy literze "j" występuje ruch w kształcie półkola) lub pozycji względem ciała (przy literze "k" dłoń jest skierowana palcami do góry, a przy literze "p" w dół lub w bok) \cite{costello}.
 
 
 \chapter{Konwolucyjne sieci neuronowe i rozpoznawanie obrazów}
 
-Konwolucyjne sieci neuronowe pozwoliły na przełomowe osiągnięcia ostatniej dekady w dziedzinie rozpoznawania wzorców, zaczynając od obrazów a kończąc na rozpoznawaniu głosu. Jednym z wyróżników sieci CNN jest znaczna redukcja ilości parametrów w dalszej części modelu. Mniejsza ilość parametrów pozwoliła na budowanie większych sieci, które mogą rozwiązywać bardziej skomplikowane problemy niż dotychczasowe modele z użyciem zwykłych sieci neuronowych\cite{8308186}.
+Konwolucyjne sieci neuronowe pozwoliły na przełomowe osiągnięcia ostatniej dekady w dziedzinie rozpoznawania wzorców, zaczynając od obrazów a kończąc na rozpoznawaniu głosu. Jednym z wyróżników sieci CNN jest znaczna redukcja ilości parametrów w dalszej części modelu. Mniejsza ilość parametrów pozwoliła na budowanie większych sieci, które mogą rozwiązywać bardziej skomplikowane problemy niż dotychczasowe modele z użyciem zwykłych sieci neuronowych \cite{8308186}.
 
-\section{Zasada działania}
+\section{Zasada działania sieci konwolucyjnych (CNN)}
 
-Model CNN na swoim wejściu posiada najczęściej naprzemiennie ustawione warstwy konwolucyjne(\ref{konw}) i Pooling(\ref{pool}). Pozwala to na automatyczne wykrywanie cech charakterystycznych i bardzo szybkie zmniejszenie objętości przetwarzanych danych. Przetworzone dane obrazu wejściowego są spłaszczane do jednego wymiaru przez warstwę Flatten(\ref{flat}). Spłaszczone dane przyjmują kolejne warstwy gęsto połączone(\ref{dense}) i dokonują ostatecznej klasyfikacji danych wejściowych do danej kategorii\cite{9463236}.
+Model CNN na swoim wejściu posiada najczęściej naprzemiennie ustawione warstwy konwolucyjne i Pooling. Pozwala to na automatyczne wykrywanie cech charakterystycznych i bardzo szybkie zmniejszenie objętości przetwarzanych danych. Przetworzone dane obrazu wejściowego są spłaszczane do jednego wymiaru przez warstwę Flatten. Spłaszczone dane przyjmują kolejne warstwy gęsto połączone i dokonują ostatecznej klasyfikacji danych wejściowych do danej kategorii \cite{9463236}.
 
 Przykładowy model został przedstawiony na rysunku \ref{cnn_mod}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.55]{cnn_arch.png}
-	\caption{Model CNN\cite{9463236}}
+	\caption{Model CNN \cite{cnnarch}}
 	\label{cnn_mod}
 \end{figure}
 
-\section{Architektura}
+\section{Architektura CNN}
 
 \subsection{Warstwy konwolucyjne}
 \label{konw}
 
-Warstwa konwolucyjna wykonuje prostą operację nałożenia filtra zachowującego się na wzór funkcji aktywacji(rysunek \ref{conv_filter}). Przeprowadzenie tej operacji piksel po pikselu przez wiele filtrów tworzy mapy cech, które są później wykorzystywane w kolejnych warstwach modelu\cite{9388351}. Warstwy konwolucyjne zamiast pełnego połączenia, gdzie każdy piksel obrazu wejściowego jest połączony z każdym pikselem obrazu wyjściowego, stosuje lokalne pola recepcyjne zmniejszając drastycznie liczbę połączeń (rysunek \ref{conv_img}).
+Warstwa konwolucyjna wykonuje prostą operację nałożenia filtra zachowującego się na wzór funkcji aktywacji (rys. \ref{conv_filter}). Przeprowadzenie tej operacji piksel po pikselu przez wiele filtrów tworzy mapy cech, które są później wykorzystywane w kolejnych warstwach modelu \cite{9388351}. Warstwy konwolucyjne zamiast pełnego połączenia, gdzie każdy piksel obrazu wejściowego jest połączony z każdym pikselem obrazu wyjściowego, stosuje lokalne pola recepcyjne zmniejszając drastycznie liczbę połączeń (rys. \ref{conv_img}).
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.9]{conv_filter.png}
-	\caption{Przykładowe działanie filtrów 3x3 na obrazach\cite{wikipedia_filterkernel}}
+	\caption{Przykładowe działanie filtrów 3x3 na obrazach \cite{wikipedia_filterkernel}}
 	\label{conv_filter}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.4]{conv.png}
-	\caption{Warstwa konwolucyjna - zasada działania\cite{developpapercom_2021}}
+	\caption{Warstwa konwolucyjna - zasada działania \cite{developpapercom_2021}}
 	\label{conv_img}
 \end{figure}
 
-Warstwy konwolucyjne pozwalają na jeszcze większe zmniejszenie ilości parametrów. Mowa o opcji ustawienia skoku pomiędzy polami recepcyjnymi - \emph{stride}, które domyślnie zachodzą na siebie przy wartości parametru = 1. Po konfiguracji \emph{stride} możliwe jest częściowe lub całkowite rozdzielenie poszczególnych węzłów(rysunek \ref{stride_img})\cite{8308186}.
+Warstwy konwolucyjne pozwalają na jeszcze większe zmniejszenie ilości parametrów. Mowa o opcji ustawienia skoku pomiędzy polami recepcyjnymi - \emph{stride}, które domyślnie zachodzą na siebie przy wartości parametru = 1. Po konfiguracji \emph{stride} możliwe jest częściowe lub całkowite rozdzielenie poszczególnych węzłów (rys. \ref{stride_img}) \cite{8308186}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.6]{stride.png}
-	\caption{Różnica w odstępach pomiędzy polami recepcyjnymi w zależności od parametru \emph{stride}\cite{8308186}}
+	\caption{Różnica w odstępach pomiędzy polami recepcyjnymi w zależności od parametru \emph{stride} \cite{8308186}}
 	\label{stride_img}
 \end{figure}
 
-Jedną z wad warstw konwolucyjnych jest utrata informacji, która pojawia się na obrzeżach obrazu. Istnieje bardzo prosta i efektywna metoda do rozwiązania tego problemu - \textit{"zero-padding"}. Zaletą takiego rozwiązania, jest również zachowanie rozmiaru obrazu na wyjściu warstwy. Dla przykładu (rysunek \ref{no_padding}) z wartościami N=7, F=3 i parametrze \emph{stride}=1, rozmiar danych wyjściowych wyniesie 5x5, gdzie oryginalny rozmiar danych wejściowych wynosił 7x7\cite{8308186}.
+Jedną z wad warstw konwolucyjnych jest utrata informacji, która pojawia się na obrzeżach obrazu. Istnieje bardzo prosta i efektywna metoda do rozwiązania tego problemu - \textit{"zero-padding"}. Zaletą takiego rozwiązania, jest również zachowanie rozmiaru obrazu na wyjściu warstwy. Dla przykładu (rys. \ref{no_padding}) z wartościami N=7, F=3 i parametrze \emph{stride}=1, rozmiar danych wyjściowych wyniesie 5x5, gdzie oryginalny rozmiar danych wejściowych wynosił 7x7 \cite{8308186}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.45]{no_padding.png}
-	\caption{Dane bez zero-padding\cite{8308186}}
+	\caption{Dane bez zero-padding \cite{8308186}}
 	\label{no_padding}
 \end{figure}
 
@@ -256,12 +257,12 @@ Gdzie:
 \end{itemize}
 
 
-Natomiast, dodając wypełnienie zerami rozmiar danych wyjściowych będzie wynosił 7x7, taki sam jak danych wejściowych(rysunek \ref{padding})\cite{8308186}. 
+Natomiast, dodając wypełnienie zerami rozmiar danych wyjściowych będzie wynosił 7x7, taki sam jak danych wejściowych (rys. \ref{padding}) \cite{8308186}. 
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.45]{padding.png}
-	\caption{Dane z zero-padding\cite{8308186}}
+	\caption{Dane z zero-padding \cite{8308186}}
 	\label{padding}
 \end{figure}
 
@@ -270,7 +271,7 @@ W przypadku uzupełniania zerami następuje lekka modyfikacja wzoru \ref{nopaddi
 	O = 1 + \frac{N+2P-F}{S}
 	\label{paddingoutput}
 \end{equation}
-Gdzie:
+gdzie:
 \begin{itemize}
 	\item N - rozmiar danych wejściowych,
 	\item F - rozmiar filtra,
@@ -278,21 +279,21 @@ Gdzie:
 	\item P - liczba warstw \emph{zero-padding}.
 \end{itemize}
 
-Idea uzupełniania brzegów obrazu zerami pozwala na zachowanie rozmiaru obrazu w niezmienionej formie i zatracania informacji. Dzięki temu możliwe jest zastosowanie jakiejkolwiek liczby warstw konwolucyjnych\cite{8308186}.
+Idea uzupełniania brzegów obrazu zerami pozwala na zachowanie rozmiaru obrazu w niezmienionej formie i zatracania informacji. Dzięki temu możliwe jest zastosowanie jakiejkolwiek liczby warstw konwolucyjnych \cite{8308186}.
 
 \subsection{Warstwy Pooling}
 \label{pool}
 
-Główną ideą działania warstwy \emph{Pooling} jest redukcja wymiaru danych dla następnych warstw, starając się zachować jak najwięcej informacji zawartych w danych. W domenie przetwarzania obrazów może to być porównane do zmiany rozdzielczości obrazu, na którym dokonujemy przekształcenia. Warstwa ta nie wpływa na liczbę map cech wygenerowanych przez poprzednią warstwę konwolucyjną, tylko na ich rozmiar\cite{8308186}. 
+Główną ideą działania warstwy \emph{Pooling} jest redukcja wymiaru danych dla następnych warstw, starając się zachować jak najwięcej informacji zawartych w danych. W domenie przetwarzania obrazów może to być porównane do zmiany rozdzielczości obrazu, na którym dokonujemy przekształcenia. Warstwa ta nie wpływa na liczbę map cech wygenerowanych przez poprzednią warstwę konwolucyjną, tylko na ich rozmiar \cite{8308186}. 
 
-\emph{Max-pooling} to jedna z najczęściej używanych metod. Dzieli ona obraz na regiony i zwraca maksymalne wartości występujące w danym regionie. Bardzo popularną wielkością regionów jest rozmiar 2x2 z parametrem \emph{stride} = 2. Powoduje to, że regiony na siebie nie nachodzą i wyjściowy obraz o rozmiarze \emph{N} (gdzie N jest liczbą parzystą) po dokonaniu na nim operacji będzie miał rozmiar $\frac{N}{2}$\cite{8308186}.
+\emph{Max-pooling} to jedna z najczęściej używanych metod. Dzieli ona obraz na regiony i zwraca maksymalne wartości występujące w danym regionie. Bardzo popularną wielkością regionów jest rozmiar 2x2 z parametrem \emph{stride} = 2. Powoduje to, że regiony na siebie nie nachodzą i wyjściowy obraz o rozmiarze \emph{N} (gdzie N jest liczbą parzystą) po dokonaniu na nim operacji będzie miał rozmiar $\frac{N}{2}$ \cite{8308186}.
 
-Zasadę działania warstwy \emph{max pooling} opisaną w poprzednim akapicie przedstawia rysunek \ref{max_pooling}.
+Zasadę działania warstwy \emph{max pooling} opisaną w poprzednim akapicie przedstawia rys. \ref{max_pooling}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.6]{max_pooling.png}
-	\caption{Przykładowe działanie max pooling\cite{8308186}}
+	\caption{Przykładowe działanie max pooling \cite{8308186}}
 	\label{max_pooling}
 \end{figure}
 
@@ -303,10 +304,10 @@ Warstwa \emph{flatten} to warstwa buforowa pomiędzy wielowymiarowymi danymi poc
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.6]{flatten.png}
-	\caption{Przykładowe działanie warstwy flatten\cite{superddflatten}}
+	\caption{Przykładowe działanie warstwy flatten \cite{superddflatten}}
 	\label{flatten}
 \end{figure}
-Jak nazwa opisywanej warstwy wskazuje - dokonuje ona spłaszczenia wielowymiarowych danych do jednego długiego wektora, który może zostać przekazany do następnych warstw, które na podstawie danych zawartych w tym wektorze sklasyfikują ostateczny wynik\cite{superddflatten}.
+Jak nazwa opisywanej warstwy wskazuje - dokonuje ona spłaszczenia wielowymiarowych danych do jednego długiego wektora, który może zostać przekazany do następnych warstw, które na podstawie danych zawartych w tym wektorze sklasyfikują ostateczny wynik \cite{superddflatten}.
 
 Przykład działania warstwy \emph{flatten} został przedstawiony na rysunku \ref{flatten}.
 
@@ -314,16 +315,16 @@ Przykład działania warstwy \emph{flatten} został przedstawiony na rysunku \re
 
 \subsection{Warstwy Dense}
 \label{dense}
-Warstwy \emph{fully-connected} są podobne do tych znajdujących się w zwykłych sieciach neuronowych. Każdy węzeł jest bezpośrednio połączony z każdym węzłem z poprzedniej i następnej warstwy (rysunek \ref{fullycon})\cite{8308186}. 
+Warstwy \emph{fully-connected} są podobne do tych znajdujących się w zwykłych sieciach neuronowych. Każdy węzeł jest bezpośrednio połączony z każdym węzłem z poprzedniej i następnej warstwy (rys. \ref{fullycon}) \cite{8308186}. 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.6]{fullycon.png}
-	\caption{Przykład warstw \emph{fully-connected}\cite{fullycon}}
+	\includegraphics[scale=0.4]{fullycon.png}
+	\caption{Przykład warstw \emph{fully-connected} \cite{fullycon}}
 	\label{fullycon}
 \end{figure}
 
-Przy przetwarzaniu obrazów wprowadzane do sieci są bardzo duże ilości danych. Dzięki sekcji warstw konwolucyjnych i \emph{pooling} następuje redukcja rozmiaru danych jakie trafiają do warstw \emph{fully-connected}. Bez tego przetwarzanie obrazów byłoby niemożliwe lub bardzo wolne z powodu dużego zapotrzebowania warstw \emph{fully-connected} na moc obliczeniową z racji na obecność wielu równoległych obliczeń w tych warstwach\cite{8308186}. 
+Przy przetwarzaniu obrazów wprowadzane do sieci są bardzo duże ilości danych. Dzięki sekcji warstw konwolucyjnych i \emph{pooling} następuje redukcja rozmiaru danych jakie trafiają do warstw \emph{fully-connected}. Bez tego przetwarzanie obrazów byłoby niemożliwe lub bardzo wolne z powodu dużego zapotrzebowania warstw \emph{fully-connected} na moc obliczeniową z racji na obecność wielu równoległych obliczeń w tych warstwach \cite{8308186}. 
 
 \section{Zastosowania}
 
@@ -342,73 +343,68 @@ Sieci \emph{CNN} są używane w wielu istniejących aplikacjach. Można ich uży
 	\item opisywanie obrazów,
 	\item uwierzytelnianie na podstawie parametrów biometrycznych,
 	\item klasyfikacja dokumentów,
-	\item segmentacja trójwymiarowych obrazów medycznych\cite{cnnapps}.
+	\item segmentacja trójwymiarowych obrazów medycznych \cite{cnnapps}.
 \end{itemize}
 
 Na potrzeby tej pracy w rozdziale \ref{mnist} zostanie przedstawiony przykład klasyfikacji wieloklasowej.
 
 \subsection{MNIST}
 \label{mnist}
-Zbiór \emph{MNIST} zawiera w sobie 70000 obrazów odręcznie pisanych cyfr z zakresu 0-9. Problem klasyfikacji jest aktualnie przedstawiany jako trywialne i podstawowe zagadnienie w dziedzinie \emph{AI}. Niemniej jednak jest on używany do celów nauki, jak również przez analityków jako próba spekulacji na temat obliczeń sztucznych sieci neuronowych\cite{9388351}. 
+Zbiór \emph{MNIST} zawiera w sobie 70000 obrazów odręcznie pisanych cyfr z zakresu 0-9. Problem klasyfikacji jest aktualnie przedstawiany jako trywialne i podstawowe zagadnienie w dziedzinie \emph{AI}. Niemniej jednak jest on używany do celów nauki, jak również przez analityków jako próba spekulacji na temat obliczeń sztucznych sieci neuronowych \cite{9388351}. 
 
-Głównym wyzwaniem w zbiorze \emph{MNIST} jest zróżnicowanie odręcznie pisanych cyfr pod względem wielkości, grubości, orientacji i innych czynników. Wynika to z tego, że cyfry były komponowane przez wiele osób z różnymi sposobami pisania\cite{9388351}.
-
+Głównym wyzwaniem w zbiorze \emph{MNIST} jest zróżnicowanie odręcznie pisanych cyfr pod względem wielkości, grubości, orientacji i innych czynników. Wynika to z tego, że cyfry były komponowane przez wiele osób z różnymi sposobami pisania \cite{9388351}.
 Na rysunku \ref{mnistimg} zostały przedstawione przykładowe cyfry ze zbioru \emph{MNIST}.
-
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.6]{mnistimg.png}
-	\caption{Przykłady cyfr ze zbioru \emph{MNIST}\cite{mnistwik}}
+	\caption{Przykłady cyfr ze zbioru \emph{MNIST} \cite{mnistwik}}
 	\label{mnistimg}
 \end{figure}
+Czynnością, od której należy zacząć chcąc pracować z zbiorem \emph{MNIST} jest skorzystanie z interfejsu \emph{Keras API} w celu pobrania zbioru danych. Zbiór \emph{MNIST} jest podzielony na kilka części - część przeznaczoną do treningu modelu i część do ewaluacji stworzonej sieci. Wewnątrz zbiorów treningowych i testowych dane rozdzielone są na obrazy o rozmiarze 28x28 i etykiety, które zawierają numer z zakresu 0-9 odpowiadający cyfrze, do której jest przypisany \cite{mnistapp}. Poszczególne instrukcje zostały przedstawione na listingu \ref{lst:mnistdownload}.
 
-Rzeczą, od której należy zacząć chcąc pracować z zbiorem \emph{MNIST} jest skorzystanie z interfejsu \emph{Keras API} w celu pobrania zbioru danych. Zbiór \emph{MNIST} jest podzielony na kilka części - część przeznaczoną do treningu modelu i część do ewaluacji stworzonej sieci. Wewnątrz zbiorów treningowych i testowych dane rozdzielone są na obrazy o rozmiarze 28x28 i etykiety, które zawierają numer z zakresu 0-9 odpowiadający cyfrze, do której jest przypisany\cite{mnistapp}. Poszczególne instrukcje zostały przedstawione na listingu \ref{lst:mnistdownload}.
-
-\begin{lstlisting}[language=Python, caption={Pobieranie zbioru \emph{MNIST}\cite{mnistapp}}, label={lst:mnistdownload}]
+\begin{lstlisting}[language=Python, caption={Pobieranie zbioru \emph{MNIST} \cite{mnistapp}}, label={lst:mnistdownload}]
 	import tensorflow as tf
 	(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 \end{lstlisting}
 
-W celu użycia zbioru danych w modelu niezbędne jest zmiana wymiarów tablic, w~których znajdują się obrazy w celu dodatnia jednego dodatkowego wymiaru. Następnie wartości dla poszczególnych pikseli obrazów, które domyślnie znajdują się w zakresie od 0 do 255 muszą zostać znormalizowane do zakresu 0.0-1.0. Najprościej osiągnąć to poprzez operację dzielenia przez 255 wszystkich komórek(listing \ref{lst:mnistreshape})\cite{mnistapp}.
+W celu użycia zbioru danych w modelu niezbędna jest zmiana wymiarów tablic, w~których znajdują się obrazy w celu dodatnia jednego dodatkowego wymiaru. Jest to wymóg użytego API, gdzie ostatni wymiar jest przeznaczony na jedną lub więcej cech danych. Następnie wartości dla poszczególnych pikseli obrazów, które domyślnie znajdują się w zakresie od 0 do 255 muszą zostać znormalizowane do zakresu 0.0-1.0. Najprościej osiągnąć to poprzez operację dzielenia przez 255 wszystkich komórek (listing \ref{lst:mnistreshape}) \cite{mnistapp}.
 
-\begin{lstlisting}[language=Python, caption={Zmiana rozmiarów tablic i normalizacja\cite{mnistapp}}, label={lst:mnistreshape}]
-	# Reshaping the array to 4-dims so that it can work with the Keras API
+\begin{lstlisting}[language=Python, caption={Zmiana rozmiarów tablic i normalizacja \cite{mnistapp}}, label={lst:mnistreshape}]
 	x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
 	x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
 	input_shape = (28, 28, 1)
-	# Making sure that the values are float so that we can get decimal points after division
+	
 	x_train = x_train.astype('float32')
 	x_test = x_test.astype('float32')
-	# Normalizing the RGB codes by dividing it to the max RGB value.
+	
 	x_train /= 255
 	x_test /= 255
 \end{lstlisting}
 
-Model do klasyfikacji cyfr na wejściu składa się z jednej warstwy konwolucyjnej posiadającej 28 filtrów i warstwy \emph{MaxPooling}, która zmniejszy rozmiar danych dwukrotnie. Następnie po spłaszczeniu danych do postaci jednowymiarowego wektora, dane zostaną przekazane do warstw \emph{Dense}, kolejno do warstwy posiadającej 128 węzłów (neuronów) a następnie do warstwy wyjściowej. Warstwa wyjściowa posiada 10 węzłów czyli dokładnie tyle co klas, które model ma przypisywać. Funkcja aktywacji \emph{softmax} pozwoli na odczyt wyników w formie rozkładu prawdopodobieństwa (listing \ref{lst:mnistmodel})\cite{mnistapp}.
+Model do klasyfikacji cyfr na wejściu składa się z jednej warstwy konwolucyjnej posiadającej 28 filtrów i warstwy \emph{MaxPooling}, która zmniejszy rozmiar danych dwukrotnie. Następnie po spłaszczeniu danych do postaci jednowymiarowego wektora, dane przekazywane są do warstw \emph{Dense}, kolejno do warstwy posiadającej 128 węzłów (neuronów) a następnie do warstwy wyjściowej. Warstwa wyjściowa posiada 10 węzłów czyli dokładnie tyle co klas, które model ma przypisywać. Funkcja aktywacji \emph{softmax} pozwoli na odczyt wyników w formie rozkładu prawdopodobieństwa (listing \ref{lst:mnistmodel}) \cite{mnistapp}.
 
-\begin{lstlisting}[language=Python, caption={Budowa modelu\cite{mnistapp}}, label={lst:mnistmodel}]
+\begin{lstlisting}[language=Python, caption={Budowa modelu \cite{mnistapp}}, label={lst:mnistmodel}]
 	from tensorflow.keras.models import Sequential
 	from tensorflow.keras.layers import Dense, Conv2D, Dropout, Flatten, MaxPooling2D
-	# Creating a Sequential Model and adding the layers
 	model = Sequential()
 	model.add(Conv2D(28, kernel_size=(3,3), input_shape=input_shape))
 	model.add(MaxPooling2D(pool_size=(2, 2)))
-	model.add(Flatten()) # Flattening the 2D arrays for fully connected layers
+	model.add(Flatten())
 	model.add(Dense(128, activation=tf.nn.relu))
 	model.add(Dropout(0.2))
 	model.add(Dense(10,activation=tf.nn.softmax))
 \end{lstlisting}
 
-Model stworzony w listingu \ref{lst:mnistmodel} musi zostać skompilowany. Zostaną do niego dodane optymalizator, funkcja straty i metryki. Tak skompilowany model może zostać przedstawiony do treningu (listing \ref{lst:mnisttraining})\cite{mnistapp}. 
+Model stworzony w listingu \ref{lst:mnistmodel} musi zostać skompilowany. Zostaną do niego dodane optymalizator, funkcja straty i metryki. Tak skompilowany model może zostać przedstawiony do treningu (listing \ref{lst:mnisttraining}) \cite{mnistapp}. 
 
-\begin{lstlisting}[language=Python, caption={Kompilacja i trening modelu\cite{mnistapp}}, label={lst:mnisttraining}]
+\begin{lstlisting}[language=Python, caption={Kompilacja i trening modelu \cite{mnistapp}}, label={lst:mnisttraining}]
 	model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 	model.fit(x=x_train,y=y_train, epochs=10)
 \end{lstlisting}
 
-Wytrenowany model może zostać poddany ewaluacji na testowych danych (listing \ref{lst:mnisteval}). Model osiąga wyniki w okolicach 98\%-99\% poprawności klasyfikacji\cite{mnistapp}. 
+Wytrenowany model może zostać poddany ewaluacji na testowych danych (listing \ref{lst:mnisteval}). Model osiąga wyniki w okolicach 98\%-99\% poprawności klasyfikacji \cite{mnistapp}. 
 
-\begin{lstlisting}[language=Python, caption={Ewaluacja modelu\cite{mnistapp}}, label={lst:mnisteval}]
+\begin{lstlisting}[language=Python, caption={Ewaluacja modelu \cite{mnistapp}}, label={lst:mnisteval}]
 	model.evaluate(x_test, y_test)
 \end{lstlisting}
 
@@ -752,7 +748,7 @@ Główna pętla programowa zajmuje się pozyskiwaniem klatek z kamery za pomocą
 	cv2.destroyAllWindows()
 \end{lstlisting}
 
-Praktyczne działanie programu przedstawia rysunek \ref{umcs}. W danym przypadku udało się pomyślnie wypisać na ekranie skrót nazwy Uniwersytetu Marii Curie-Słodowskiej.
+Praktyczne działanie programu przedstawia rys. \ref{umcs}. W danym przypadku udało się pomyślnie wypisać na ekranie skrót nazwy Uniwersytetu Marii Curie-Słodowskiej.
 
 \begin{figure}[h]
 	\centering
